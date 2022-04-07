@@ -1,7 +1,19 @@
-<!-- scripts necessarios -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="<?php echo ASSETS.'vendor/jquery/jquery.min.js'; ?>"></script>
+<script src="<?php echo ASSETS.'vendor/bootstrap/js/bootstrap.bundle.min.js'; ?>"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="<?php echo ASSETS.'vendor/jquery-easing/jquery.easing.min.js'; ?>"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="<?php echo JS.'sb-admin-2.min.js'; ?>"></script>
+
+<!-- Page level plugins -->
+<script src="<?php echo ASSETS.'vendor/chart.js/Chart.min.js'; ?>"></script>
+
+<!-- Page level custom scripts -->
+<script src="<?php echo JS.'demo/chart-area-demo.js'; ?>"></script>
+<script src="<?php echo JS.'demo/chart-pie-demo.js'; ?>"></script>
 
 <!-- toastr js -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
