@@ -13,7 +13,7 @@ class homeController extends Controller {
       'bg'    => 'dark'
     ];
 
-    View::render('bee', $data);
+    View::render('index', $data);
   }
 
   function test()
