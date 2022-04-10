@@ -11,6 +11,7 @@ class loginController extends Controller {
 
   function index()
   {
+    Flasher::new('Probando notificaciones.', 'danger');
     $data =
     [
       'title'   => 'Ingresar a tu cuenta',
