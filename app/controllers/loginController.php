@@ -11,7 +11,7 @@ class loginController extends Controller {
 
   function index()
   {
-    Flasher::new('Probando notificaciones.', 'danger');
+   //prueba de notificaciones Flasher::new('Probando notificaciones.', 'danger');
     $data =
     [
       'title'   => 'Ingresar a tu cuenta',
@@ -23,15 +23,20 @@ class loginController extends Controller {
 
   function post_login()
   {
-    if (!Csrf::validate($_POST['csrf']) || !check_posted_data(['usuario','csrf','password'], $_POST)) {
-      Flasher::new('Acceso no autorizado.', 'danger');
-      Redirect::back();
+    try{
+      if (!Csrf::validate($_POST['csrf']) || !check_posted_data(['email','csrf','password'], $_POST)) {
+        Flasher::new('Acceso no autorizado.', 'danger');
+        Redirect::back();
     }
-
     // Data pasada del formulario
-    $usuario  = clean($_POST['usuario']);
+    $email  = clean($_POST['email']);
     $password = clean($_POST['password']);
 
+//validacion para verificar si el email es valido
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+
+  throw new Exception('El correo electronico no es valido');
+}
     // Información del usuario loggeado, simplemente se puede reemplazar aquí con un query a la base de datos
     // para cargar la información del usuario si es existente
     $user = 
@@ -47,7 +52,7 @@ class loginController extends Controller {
     ];
 
 
-    if ($usuario !== $user['user'] || !password_verify($password.AUTH_SALT, $user['password'])) {
+    if ($email !== $user['user'] || !password_verify($password.AUTH_SALT, $user['password'])) {
       Flasher::new('Las credenciales no son correctas.', 'danger');
       Redirect::back();
     }
@@ -55,5 +60,11 @@ class loginController extends Controller {
     // Loggear al usuario
     Auth::login($user['id'], $user);
     Redirect::to('home/flash');
+}catch (Exception $e) {
+    Flasher::new($e->getMessage(), 'danger');
+    Redirect::back();
+}
+
+
   }
 }
