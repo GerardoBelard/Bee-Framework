@@ -10,12 +10,12 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+<?php echo get_favicon(); ?>
   <!-- inc_styles.php -->
   <?php require_once INCLUDES.'inc_styles.php'; ?>
 </head>
 
-<body id="page-top">
+<body class="bg-gradient-primary">
 
   <!-- Page Wrapper -->
-  <div id="bg-gradient-primary">
+  <div id="wrapper">

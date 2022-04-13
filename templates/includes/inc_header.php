@@ -13,6 +13,7 @@
 
   <!-- inc_styles.php -->
   <?php require_once INCLUDES.'inc_styles.php'; ?>
+  <?php echo get_favicon(); ?>
 </head>
 
 <body id="page-top">

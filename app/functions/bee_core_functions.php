@@ -973,7 +973,7 @@ function create_menu($links, $slug_active = 'home') {
  */
 function get_logo() {
 	$default_logo_name = 'logo';
-	$default_logo_size = '500';
+	$default_logo_size = '150';
 	$default_logo_ext  = 'png';
 	$logo              = sprintf('%s_%s.%s', $default_logo_name, $default_logo_size, $default_logo_ext); // logo_500.png
 	if (!is_file(IMAGES_PATH.$logo)) {
@@ -990,6 +990,50 @@ function get_logo() {
  * @param string $key
  * @return mixed
  */
+
+function get_favicon()
+{
+	$path        = FAVICON; // path del archivo favicon
+	$favicon     = 'favicon.png'; // nombre del archivo favicon
+	$type        = '';
+	$href        = '';
+	$placeholder = '<link rel="icon" type="%s" href="%s">';
+
+	switch (pathinfo($path.$favicon, PATHINFO_EXTENSION)) {
+		case 'ico':
+			$type = 'image/vnd.microsoft.icon';
+			$href = $path.$favicon;
+			break;
+
+		case 'png':
+			$type = 'image/png';
+			$href = $path.$favicon;
+			break;
+
+		case 'gif':
+			$type = 'image/gif';
+			$href = $path.$favicon;
+			break;
+		
+		case 'svg':
+			$type = 'image/svg+xml';
+			$href = $path.$favicon;
+			break;
+
+		case 'jpg':
+		case 'jpeg':
+			$type = 'image/jpg';
+			$href = $path.$favicon;
+			break;
+		
+		default:
+			return false;
+			break;
+	}
+
+	return sprintf($placeholder, $type, $href);
+}
+
 function get_user($key = null) {
 	if (!isset($_SESSION['user_session'])) return false;
 
