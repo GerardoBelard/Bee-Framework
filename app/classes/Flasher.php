@@ -56,7 +56,7 @@ class Flasher
         foreach ($_SESSION[$type] as $m) {
           $output .= '<div class="alert alert-'.$type.' alert-dismissible show fade" role="alert">';
           $output .= $m;
-          $output .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>';
           $output .= '</div>';
         }
 
@@ -66,6 +66,7 @@ class Flasher
     
     return $output;
   }
+
 
   /**
    * Muestra un mensaje de acceso denegado
