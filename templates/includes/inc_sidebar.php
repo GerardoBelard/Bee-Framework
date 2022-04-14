@@ -1,3 +1,8 @@
+<?php
+$slug = isset($d->slug) && !empty($d->slug) ? $d->slug : 'dashboard';
+?>
+
+
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -12,7 +17,7 @@
     
     
     <?php if (is_admin(get_user_role())): ?>
-        <li class="nav-item">
+         <li class="nav-item <?php echo $slug === 'admin' ? 'active' : null; ?>">
         <a class="nav-link" href="admin">
             <i class="fas fa-fw fa-user-lock"></i>
             <span>Administracion</span></a>
@@ -21,7 +26,7 @@
         
     <?php endif; ?>
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item <?php echo $slug === 'dashboard' ? 'active' : null; ?>">
         <a class="nav-link" href="dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
@@ -37,14 +42,14 @@
     </div>
 
     <!-- Nav Item - Profesor -->
-    <li class="nav-item">
+    <li class="nav-item<?php echo $slug === 'profesores' ? 'active' : null; ?>">
         <a class="nav-link" href="profesores">
             <i class="fas fa-fw fa-users"></i>
             <span>Profesores</span></a>
     </li>
 
     <!-- Nav Item - Alumnos -->
-  <li class="nav-item">
+  <li class="nav-item <?php echo $slug === 'alumnos' ? 'active' : null; ?>">
         <a class="nav-link" href="alumnos">
             <i class="fas fa-fw fa-book-reader"></i>
             <span>Alumnos</span></a>
@@ -52,28 +57,28 @@
 
 
      <!-- Nav Item - Materias -->
-     <li class="nav-item">
+     <li class="nav-item<?php echo $slug === 'materias' ? 'active' : null; ?>">
         <a class="nav-link" href="materias">
             <i class="fas fa-fw fa-book"></i>
             <span>Materias</span></a>
     </li>
 
 <!-- Nav Item - Grupos -->
-<li class="nav-item">
+<li class="nav-item<?php echo $slug === 'grupos' ? 'active' : null; ?>">
         <a class="nav-link" href="grupos">
             <i class="fas fa-fw fa-graduation-cap"></i>
             <span>Grupos</span></a>
     </li>
 
     <!-- Nav Item - Horarios -->
-  <li class="nav-item">
+  <li class="nav-item<?php echo $slug === 'horarios' ? 'active' : null; ?>">
         <a class="nav-link" href="horarios">
             <i class="fas fa-fw fa-book-reader"></i>
             <span>Horario</span></a>
     </li>
 
-    <!-- Nav Item - Alumnos -->
-  <li class="nav-item">
+    <!-- Nav Item - lecciones -->
+  <li class="nav-item<?php echo $slug === 'lecciones' ? 'active' : null; ?>">
         <a class="nav-link" href="lecciones">
             <i class="fas fa-fw fa-chalkboard-teacher"></i>
             <span>Lecciones</span></a>

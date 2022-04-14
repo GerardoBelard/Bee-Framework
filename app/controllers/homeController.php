@@ -9,8 +9,7 @@ class homeController extends Controller {
   {
     $data =
     [
-      'title' => 'Home',
-      'bg'    => 'dark'
+      'title' => 'Home'
     ];
 
     View::render('index', $data);
