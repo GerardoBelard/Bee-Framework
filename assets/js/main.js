@@ -41,7 +41,7 @@ $(document).ready(function() {
   ///////// NO REQUERIDOS, SOLO PARA EL PROYECTO DEMO DE GASTOS E INGRESOS
   ////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
-  
+  $('#dataTable').DataTable();
   // Agregar un movimiento
   $('.bee_add_movement').on('submit', bee_add_movement);
   function bee_add_movement(event) {

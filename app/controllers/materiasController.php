@@ -24,7 +24,7 @@ class materiasController extends Controller
     [
       'title' => 'Todas Las Materias',
       'slug' => 'materias',
-      'msg'   => 'Bienvenido al controlador de "materias", se ha creado con éxito si ves este mensaje.',
+      'button' => ['url' => 'materias/agregar', 'text'=> '<i class="fas fa-plus"></i>Agregar Nivel'],
       'materias' => materiaModel::all()
     ];
     

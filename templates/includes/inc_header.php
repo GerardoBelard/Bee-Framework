@@ -33,10 +33,17 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-<!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800"><?php echo isset($d->title) ? $d->title : null; ?></h1>
-</div>
+      <?php if (!isset($d->hide_title)): ?>
+        <h1 class="h3 mb-0 text-gray-800"><?php echo isset($d->title) ? $d->title : null; ?></h1>
+      <?php endif; ?>
+      <?php if (isset($d->button)): ?>
+        <?php echo sprintf('<a href="%s" class="d-none d-sm-inline-block btn btn-sm %s shadow-sm">%s</a>',
+        isset($d->button->url) ? $d->button->url : URL,
+        isset($d->button->classes) ? $d->button->classes : 'btn-primary',
+        isset($d->button->text) ? $d->button->text : 'Parámetro faltante'); ?>
+      <?php endif; ?>
+    </div>
 
 <div class="row">
   <div class="col-12">
