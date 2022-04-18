@@ -39,6 +39,27 @@ function is_user($rol, $roles_aceptados){
 
   return in_array($rol, array_merge($default, $roles_aceptados));
 }
+ /**
+  * 0 Acceso no autorizado
+  * 1 accion no autorizada
+  * 2 agregar
+  * 3 editar
+  * 4 borrar 
+  * @param integer $index
+  * @return mixed
+  */
+function get_notificaciones($index = 0)
+{
+  $notificaciones = 
+  [
+    'Acceso no autorizado.',
+    'Acción no autorizada.',
+    'Hubo un error al agregar el nivel.',
+    'Hubo un error al actualizar el nivel.',
+    'Hubo un error al borrar el nivel.'
+  ];
 
+  return isset($notificaciones[$index]) ? $notificaciones[$index] : $notificaciones[0];
+}
 
 

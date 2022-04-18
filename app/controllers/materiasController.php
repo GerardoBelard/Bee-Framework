@@ -64,8 +64,14 @@ class materiasController extends Controller
     {
         try {
             if (!check_posted_data(['csrf', 'nombre', 'descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
-                throw new Exception('Acceso no autorizado');
+                throw new Exception(get_notificaciones());
             }
+
+            //validando rol de usuario 
+            if (!is_admin(get_user_role())){
+                throw new Exception(get_notificaciones(1));
+            }
+
             $nombre = clean($_POST["nombre"]);
             $descripcion = clean($_POST["descripcion"]);
             //Validar que la materia no existe en la bdd
@@ -113,12 +119,16 @@ class materiasController extends Controller
             if (!check_posted_data(['csrf', 'id', 'nombre', 'descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
                 throw new Exception('Acceso no autorizado');
             }
+              //validando rol de usuario 
+              if (!is_admin(get_user_role())){
+                throw new Exception(get_notificaciones(1));
+            }
             $id = clean ($_POST["id"]);
             $nombre = clean($_POST["nombre"]);
             $descripcion = clean($_POST["descripcion"]);
 
             if(!$materia = materiaModel::by_id($id)){
-                throw new Exception('no existe la materia en la base de datos');
+                throw new Exception('No existe la materia en la base de datos');
             }
            
              //Validar que la materia no existe en la bdd
@@ -139,7 +149,7 @@ class materiasController extends Controller
             if (!materiaModel::update(materiaModel::$t1, ['id' => $id], $data)) {
                 throw new Exception('hubo un error al actualizar la materia');
             }
-            Flasher::new(sprintf('materia <b>%s</b> Actualizada con exito', $nombre), 'success');
+            Flasher::new(sprintf('Materia <b>%s</b> Actualizada con éxito', $nombre), 'success');
             Redirect::back();
 
             //
@@ -153,7 +163,40 @@ class materiasController extends Controller
   
        
     }
-    function borrar($id){
+   
+    function borrar($id)
+    {
+        try {
+            if (!check_get_data(['_t'], $_GET) || !Csrf::validate($_GET['_t'])) {
+                throw new Exception(get_notificaciones());
+            }
+              //validando rol de usuario 
+              if (!is_admin(get_user_role())){
+                throw new Exception(get_notificaciones(1));
+            }
            
+          
+
+            if(!$materia = materiaModel::by_id($id)){
+                throw new Exception('No existe la materia en la base de datos');
+            }
+           
+//Eliminar el registro 
+            if (!materiaModel::remove(materiaModel::$t1, ['id' => $id], 1)) {
+                throw new Exception(get_notificaciones(4));
+            }
+            Flasher::new(sprintf('Nivel <b>%s</b> borrado con éxito', $materia['nombre']), 'success');
+            Redirect::back();
+
+            //
+        } catch (PDOException $e) {
+            Flasher::new($e->getMessage(), 'danger');
+            Redirect::back();
+        } catch (Exception $e) {
+            Flasher::new($e->getMessage(), 'danger');
+            Redirect::back();
+        }
+  
+       
     }
-}
+  }
