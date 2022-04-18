@@ -68,7 +68,13 @@ class materiasController extends Controller
             }
             $nombre = clean($_POST["nombre"]);
             $descripcion = clean($_POST["descripcion"]);
-           
+            //Validar que la materia no existe en la bdd
+
+            $sql = 'SELECT * FROM materias Where  nombre = :nombre LIMIT 1';
+            if(materiaModel::query($sql, ['nombre' => $nombre])){
+                throw new Exception(sprintf('Ya existe la materia <b>%s</b> en la base de datos', $nombre));
+            
+            }
             $data = [
             'nombre' => $nombre,
             'descripcion' => $descripcion,
@@ -99,5 +105,55 @@ class materiasController extends Controller
         function post_editar()
         {
         }
+    }
+
+    public function post_editar()
+    {
+        try {
+            if (!check_posted_data(['csrf', 'id', 'nombre', 'descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+                throw new Exception('Acceso no autorizado');
+            }
+            $id = clean ($_POST["id"]);
+            $nombre = clean($_POST["nombre"]);
+            $descripcion = clean($_POST["descripcion"]);
+
+            if(!$materia = materiaModel::by_id($id)){
+                throw new Exception('no existe la materia en la base de datos');
+            }
+           
+             //Validar que la materia no existe en la bdd
+
+             $sql = 'SELECT * FROM materias Where id != :id AND nombre = :nombre LIMIT 1';
+             if(materiaModel::query($sql, ['id' => $id, 'nombre' => $nombre])){
+                 throw new Exception(sprintf('Ya existe la materia <b>%s</b> en la base de datos', $nombre));
+             
+             }
+
+            $data = [
+            'nombre' => $nombre,
+            'descripcion' => $descripcion,
+          
+          ];
+
+            //insertar a la base de datos
+            if (!materiaModel::update(materiaModel::$t1, ['id' => $id], $data)) {
+                throw new Exception('hubo un error al actualizar la materia');
+            }
+            Flasher::new(sprintf('materia <b>%s</b> Actualizada con exito', $nombre), 'success');
+            Redirect::back();
+
+            //
+        } catch (PDOException $e) {
+            Flasher::new($e->getMessage(), 'danger');
+            Redirect::back();
+        } catch (Exception $e) {
+            Flasher::new($e->getMessage(), 'danger');
+            Redirect::back();
+        }
+  
+       
+    }
+    function borrar($id){
+           
     }
 }
