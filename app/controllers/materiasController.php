@@ -34,8 +34,21 @@ class materiasController extends Controller
 
     public function ver($id)
     {
-        View::render('ver');
+        if (!$materia = materiaModel::by_id($id)){
+            Flasher::new('No existe la materia', 'danger');
+            Redirect::to('materias');
+        }
+        $data =
+        [
+          'title' => sprintf('Viendo %s', $materia['nombre']),
+          'slug' => 'materias',
+          'button' => ['url' => 'materias', 'text'=> '<i class="fas fa-table"></i>Materias'],
+          'm' => $materia
+        ];
+
+        View::render('ver', $data);
     }
+    
 
     public function agregar()
     {
