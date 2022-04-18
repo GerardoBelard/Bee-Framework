@@ -41,7 +41,28 @@ $(document).ready(function() {
   ///////// NO REQUERIDOS, SOLO PARA EL PROYECTO DEMO DE GASTOS E INGRESOS
   ////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
-  $('#dataTable').DataTable();
+  $('#dataTable').DataTable(
+    {
+      language: {
+        search:         "Buscar&nbsp;:",
+        lengthMenu:     "Mostrar _MENU_ registros",
+        info:           "Mostrando _START_ a _END_ de _TOTAL_ registros.",
+        infoEmpty:      "Mostrando 0 registros.",
+        infoFiltered:   "(Filtrando de _MAX_ registros en total)",
+        infoPostFix:    "",
+        zeroRecords:    "No hay registros encontrados.",
+        emptyTable:     "No hay información.",
+        paginate: {
+          first:      "Primera",
+          previous:   "Anterior",
+          next:       "Siguiente",
+          last:       "Última"
+        }
+      },
+      paging: false,
+      aaSorting: []
+    }
+  );
   // Agregar un movimiento
   $('.bee_add_movement').on('submit', bee_add_movement);
   function bee_add_movement(event) {

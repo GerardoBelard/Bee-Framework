@@ -5,7 +5,7 @@
 														<h6 class="m-0 font-weight-bold text-primary"><center>Lista de Niveles Registrados</center></h6>
 												</div>
 												<div class="card-body">
-                         <?php if (!empty($d->materias)): ?>
+                         <?php if (!empty($d->materias->rows)): ?>
 														<div class="table-responsive">
 																<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 																		<thead>
@@ -17,7 +17,7 @@
 																		</thead>
 																
 																		<tbody>
-																			<?php foreach ($d->materias as $m): ?>
+																			<?php foreach ($d->materias->rows as $m): ?>
 
 																		
 
@@ -29,14 +29,16 @@
 									                        	<a href="<?php echo 'materias/ver/'.$m->id; ?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
 																						<a href="<?php echo 'materias/editar/'.$m->id; ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
 									                         	<a href="<?php echo buildURL('materias/borrar/'.$m->id); ?>" class="btn btn-sm btn-danger confirmar"><i class="fas fa-trash"></i></a>
-									</div>
-								</td>
+									                       </div>
+								                       </td>
 																				 
 																				</tr>
 																				<?php endforeach; ?>
 
 																		</tbody>
 																</table>
+
+																<?php echo $d->materias->pagination; ?>
 														</div>
 
 														<?php else :?>
