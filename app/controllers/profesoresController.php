@@ -26,9 +26,9 @@ class profesoresController extends Controller {
   }
     $data =
     [
-      'title' => 'Profesores',
+      'title' => 'Lista de profesores',
       'slug' => 'profesores',
-      'button' => ['url' => 'profesor/agregar', 'text' => '<i class="fas fa-plus"></i>Agregar Profesor'],
+      'button' => ['url' => buildURL('profesores/agregar'), 'text' => '<i class="fas fa-plus"></i>Agregar Profesor'],
       'profesores' => profesorModel::all_paginated()
         ];
 
@@ -43,8 +43,57 @@ class profesoresController extends Controller {
 
   function agregar()
   {
-    View::render('agregar');
-  }
+    try {
+        if (!check_get_data(['_t'], $_GET) || !Csrf::validate($_GET['_t'])) {
+            throw new Exception(get_notificaciones());
+        }
+
+        //validando rol de usuario 
+        if (!is_admin(get_user_role())){
+            throw new Exception(get_notificaciones(1));
+        }
+        $numero =rand(11111, 999999);
+        $data = 
+        [
+          'numero' => $numero,
+          'nombres' => null,
+          'apellidos' => null,
+          'nombre_completo' => null,
+          'email' => null,
+          'password' => null, 
+          'telefono' => null,
+          'hash' => generate_token(),
+          'rol' => 'profesor',
+           'status' => 'pendiente',
+           'creado' => now()
+
+        ];
+
+        //insertar a la base de datos
+        if (!$id = profesorModel::add(profesorModel::$t1, $data)) {
+            throw new Exception('hubo un error al agregar la materia');
+        }
+        Flasher::new(sprintf('Nuevo profesor <b>%s</b> agregada con exito.', $data['numero']), 'success');
+        Redirect::to('profesores/ver/%s', $numero);
+
+        //
+    } catch (PDOException $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+    } catch (Exception $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+    }
+
+    function editar($id)
+    {
+        View::render('editar');
+    }
+
+    function post_editar()
+    {
+    }
+}
 
   function post_agregar()
   {
