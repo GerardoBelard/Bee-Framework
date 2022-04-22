@@ -170,3 +170,32 @@ class ajaxController extends Controller {
     json_output(json_build(200, null, 'Opciones actualizadas con éxito'));
   }
 }
+
+//////////////////////////
+
+//////////////
+///
+///
+///
+  // Profesores
+  function get_materias_disponibles_profesor()
+  {
+    try {
+      if (!check_get_data(['_t', 'id_profesor'], $_GET) || !Csrf::validate($_GET["_t"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id = clean($_GET["id_profesor"]);
+
+      if (!$profesor = profesorModel::by_id($id)) {
+        throw new Exception('No existe el profesor en la base de datos.');
+      }
+
+      $materias = materiaModel::disponibles_profesor($profesor['id']);
+      json_output(json_build(200, $materias));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
