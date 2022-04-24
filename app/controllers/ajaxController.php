@@ -1,19 +1,106 @@
 <?php 
 
 class ajaxController extends Controller {
+
+
+  /**
+   * La petición del servidor
+   *
+   * @var string
+   */
+  private $r_type = null;
+
+  /**
+   * Hook solicitado para la petición
+   *
+   * @var string
+   */
+  private $hook   = null;
+
+  /**
+   * Tipo de acción a realizar en ajax
+   *
+   * @var string
+   */
+  private $action = null;
+
+  /**
+   * Token csrf de la sesión del usuario que solicita la petición
+   *
+   * @var string
+   */
+  private $csrf   = null;
+
+  /**
+   * Todos los parámetros recibidos de la petición
+   *
+   * @var array
+   */
+  private $data   = null;
+
+  /**
+   * Parámetros parseados en caso de ser petición put | delete | headers | options
+   *
+   * @var mixed
+   */
+  private $parsed = null;
+
+  /**
+   * Valor que se deberá proporcionar como hook para
+   * aceptar una petición entrante
+   *
+   * @var string
+   */
+  private $hook_name        = 'bee_hook'; // Si es modificado, actualizar el valor en la función core insert_inputs()
   
-  private $accepted_actions = ['get', 'post', 'put', 'delete', 'options', 'add', 'load'];
+  /**
+   * parámetros que serán requeridos en TODAS las peticiones pasadas a ajaxController
+   * si uno de estos no es proporcionado la petición fallará
+   *
+   * @var array
+   */
   private $required_params  = ['hook', 'action'];
+
+  /**
+   * Posibles verbos o acciones a pasar para nuestra petición
+   *
+   * @var array
+   */
+  private $accepted_actions = ['get', 'post', 'put', 'delete', 'options', 'headers', 'add', 'load'];
 
   function __construct()
   {
+    // Parsing del cuerpo de la petición
+    $this->r_type = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null;
+    $this->data   = in_array($this->r_type, ['PUT','DELETE','HEADERS','OPTIONS']) ? parse_str(file_get_contents("php://input"), $this->parsed) : ($this->r_type === 'GET' ? $_GET : $_POST);
+    $this->data   = $this->parsed !== null ? $this->parsed : $this->data;
+    $this->hook   = isset($this->data['hook']) ? $this->data['hook'] : null;
+    $this->action = isset($this->data['action']) ? $this->data['action'] : null;
+    $this->csrf   = isset($this->data['csrf']) ? $this->data['csrf'] : null;
+
+    // Validar que hook exista y sea válido
+    if ($this->hook !== $this->hook_name) {
+      http_response_code(403);
+      json_output(json_build(403));
+    }
+
+    // Validar que se pase un verbo válido y aceptado
+    if(!in_array($this->action, $this->accepted_actions)) {
+      http_response_code(403);
+      json_output(json_build(403));
+    }
+    
+    // Validación de que todos los parámetros requeridos son proporcionados
     foreach ($this->required_params as $param) {
-      if(!isset($_POST[$param])) {
+      if(!isset($this->data[$param])) {
+        http_response_code(403);
         json_output(json_build(403));
       }
     }
 
-    if(!in_array($_POST['action'], $this->accepted_actions)) {
+    // Validar de la petición post / put / delete el token csrf
+    if (in_array($this->action, ['post', 'put', 'delete', 'add', 'headers']) && !Csrf::validate($this->csrf)) {
+      http_response_code(403);
       json_output(json_build(403));
     }
   }
@@ -41,6 +128,18 @@ class ajaxController extends Controller {
     json_output(json_build(403));
   }
 
+  function test()
+  {
+    try {
+      json_output(json_build(200, null, 'Prueba de AJAX realizada con éxito.'));
+    } catch (Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  ///////////////////////////////////////////////////////
+  ///////////////////// PROYECTO DEMO ///////////////////
+  ///////////////////////////////////////////////////////
   function bee_add_movement()
   {
     try {
@@ -169,14 +268,10 @@ class ajaxController extends Controller {
     // se guardó con éxito
     json_output(json_build(200, null, 'Opciones actualizadas con éxito'));
   }
-}
+  ///////////////////////////////////////////////////////
+  /////////////// TERMINA PROYECTO DEMO /////////////////
+  ///////////////////////////////////////////////////////
 
-//////////////////////////
-
-//////////////
-///
-///
-///
   // Profesores
   function get_materias_disponibles_profesor()
   {
@@ -199,3 +294,27 @@ class ajaxController extends Controller {
     }
   }
 
+  function get_materias_profesor()
+  {
+    try {
+      if (!check_get_data(['_t', 'id_profesor'], $_GET) || !Csrf::validate($_GET["_t"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id = clean($_GET["id_profesor"]);
+
+      if (!$profesor = profesorModel::by_id($id)) {
+        throw new Exception('No existe el profesor en la base de datos.');
+      }
+      
+      $materias = materiaModel::materias_profesor($profesor['id']);
+      $html = get_module('profesores/materias', $materias);
+      json_output(json_build(200, $html));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+
+}

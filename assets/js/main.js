@@ -385,4 +385,42 @@ $(document).ready(function() {
   }
   get_materias_disponibles_profesor();
 
+ // Función para cargar las materias del profesor carga bloque de contenido que se agrega al wrapper
+ function get_materias_profesor() {
+
+  var wrapper = $('.wrapper_materias_profesor'),
+  id_profesor = wrapper.data('id'),
+  action      = 'get',
+  hook        = 'bee_hook';
+
+  if (wrapper.length == 0) return;
+
+  // AJAX
+  $.ajax({
+    url: 'ajax/get_materias_profesor',
+    type: 'get',
+    dataType: 'json',
+    data : { 
+      '_t': Bee.csrf,
+      id_profesor,
+      action,
+      hook
+    },
+    beforeSend: function() {
+      wrapper.waitMe();
+    }
+  }).done(function(res) {
+    if(res.status === 200) {
+      wrapper.html(res.data);
+    } else {
+      wrapper.html(res.msg);
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err) {
+    toastr.error('Hubo un error en el proceso', '¡Upss!');
+  }).always(function() {
+    wrapper.waitMe('hide');
+  })
+}
+get_materias_profesor();
 });

@@ -52,7 +52,8 @@ class profesoresController extends Controller {
       Flasher::new('No existe el profesor en la base de datos.', 'danger');
       Redirect::back();
     }
-
+    
+     
     $data =
     [
       'title'  => sprintf('Profesor #%s', $profesor['numero']),
