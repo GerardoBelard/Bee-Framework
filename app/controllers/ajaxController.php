@@ -294,27 +294,24 @@ class ajaxController extends Controller {
     }
   }
 
-  function get_materias_profesor()
-  {
+function get_materias_profesor()
+{
     try {
-      if (!check_get_data(['_t', 'id_profesor'], $_GET) || !Csrf::validate($_GET["_t"])) {
-        throw new Exception(get_notificaciones());
-      }
+        if (!check_get_data(['_t', 'id_profesor'], $_GET) || !Csrf::validate($_GET["_t"])) {
+            throw new Exception(get_notificaciones());
+        }
+        $id = clean($_GET["id_profesor"]);
 
-      $id = clean($_GET["id_profesor"]);
+        if (!$profesor = profesorModel::by_id($id)) {
+            throw new Exception('No existe el profesor');
+        }
 
-      if (!$profesor = profesorModel::by_id($id)) {
-        throw new Exception('No existe el profesor en la base de datos.');
-      }
-      
-      $materias = materiaModel::materias_profesor($profesor['id']);
-      $html = get_module('profesores/materias', $materias);
-      json_output(json_build(200, $html));
+        $materias = materiaModel::materias_profesor($profesor['id']);
+        $html = get_module('profesores/materias', $materias);
+        json_output(json_build(200, $html));
 
-    } catch(Exception $e) {
-      json_output(json_build(400, null, $e->getMessage()));
+    } catch (Exception $e) {
+        json_output(json_build(400, $e->getMessage()));
     }
   }
-
-
 }

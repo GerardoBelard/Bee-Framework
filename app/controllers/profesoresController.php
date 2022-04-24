@@ -41,28 +41,23 @@ class profesoresController extends Controller {
     View::render('index', $data);
   }
 
-  function ver($numero)
+  function ver ($numero)
   {
-    if (!is_admin($this->rol)) {
-      Flasher::new(get_notificaciones(), 'danger');
+    if (!$profesor = profesorModel::by_numero($numero)){
+      Flasher::new('No Existe el profesor en la base de datos', 'danger');
       Redirect::back();
     }
 
-    if (!$profesor = profesorModel::by_numero($numero)) {
-      Flasher::new('No existe el profesor en la base de datos.', 'danger');
-      Redirect::back();
-    }
-    
-     
-    $data =
-    [
-      'title'  => sprintf('Profesor #%s', $profesor['numero']),
-      'slug'   => 'profesores',
+ 
+
+    $data = [
+      'title' => sprintf('Profesore #%s', $profesor['numero']),
+      'slug' => 'profesores',
       'button' => ['url' => 'profesores', 'text' => '<i class="fas fa-table"></i> Profesores'],
-      'p'      => $profesor
+      'p' => $profesor
     ];
 
-    View::render('ver', $data);
+    view::render('ver', $data);
   }
 
   function agregar()
@@ -178,5 +173,5 @@ class profesoresController extends Controller {
     }
   }
 
-
+  
 }
