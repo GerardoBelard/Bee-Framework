@@ -8,6 +8,7 @@
  */
 class grupoModel extends Model {
   public static $t1   = 'grupos'; 
+  public static $t2 = 'grupos_materias';
   function __construct()
   {
     // Constructor general
@@ -108,6 +109,29 @@ class grupoModel extends Model {
       ) AND mp.id_profesor = :id_profesor';
 
     return ($rows = parent::query($sql, ['id_grupo' => $id, 'id_profesor' => $id_profesor])) ? $rows : [];
+  }
+  static function asignar_materia($id_grupo, $id_mp)
+  {
+    $data =
+    [
+      'id_grupo' => $id_grupo,
+      'id_mp'    => $id_mp
+    ];
+
+    if (!$id = self::add(self::$t2, $data)) return false;
+
+    return $id;
+  }
+
+  static function quitar_materia($id_grupo, $id_mp)
+  {
+    $data =
+    [
+      'id_grupo' => $id_grupo,
+      'id_mp'    => $id_mp
+    ];
+
+    return (self::remove(self::$t2, $data)) ? true : false;
   }
 }
 
