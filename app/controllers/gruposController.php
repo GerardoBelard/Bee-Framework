@@ -3,7 +3,7 @@
 class gruposController extends Controller {
   function __construct()
   {
-  
+  //Validacion de inicio de sesion
     if (!Auth::validate()) {
       Flasher::new('Debes iniciar sesión primero.', 'danger');
       Redirect::to('login');
@@ -32,7 +32,16 @@ class gruposController extends Controller {
 
   function agregar()
   {
-    View::render('agregar');
+   
+
+    $data =
+    [
+      'title'  => 'Agregar Grupo',
+      'button' => ['url' => 'grupos', 'text' => '<i class="fas fa-table"></i> Todos los grupos'],
+      'slug'   => 'grupos'
+    ];
+
+    View::render('agregar', $data);
   }
 
   function post_agregar()
