@@ -1,29 +1,24 @@
 <?php
 
-/**
- * Plantilla general de controladores
- * Versión 1.0.2
- *
- * Controlador de grupos
- */
 class gruposController extends Controller {
   function __construct()
   {
-    // Validación de sesión de usuario, descomentar si requerida
-    /**
+  
     if (!Auth::validate()) {
       Flasher::new('Debes iniciar sesión primero.', 'danger');
       Redirect::to('login');
     }
-    */
+    
   }
   
   function index()
   {
     $data = 
     [
-      'title' => 'Reemplazar título',
-      'msg'   => 'Bienvenido al controlador de "grupos", se ha creado con éxito si ves este mensaje.'
+      'title'  => 'Todos los Grupos',
+      'slug'   => 'grupos',
+      'button' => ['url' => 'grupos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar grupo'],
+      'grupos' => grupoModel::all_paginated()
     ];
     
     // Descomentar vista si requerida
