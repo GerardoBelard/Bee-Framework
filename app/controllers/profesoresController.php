@@ -172,6 +172,39 @@ class profesoresController extends Controller {
       Redirect::back();
     }
   }
+function borrar($id)
+{
+  try {
+    if (!check_get_data(['_t'], $_GET) || !Csrf::validate($_GET['_t'])) {
+      throw new Exception(get_notificaciones());
+    }
 
+    // Validar rol
+    if (!is_admin($this->rol)) {
+      throw new Exception(get_notificaciones(1));
+    }
+
+    //Validacion que exista el profesor
+    if (!$profesor = profesorModel::by_id($id)) {
+      throw new Exception('No existe el profesor en la base de datos.');
+    }
+
+    //Borra el registro y las conexiones
+
+    if(!profesorModel::eliminar($profesor['id']) == false){
+      throw new Exception(get_notificaciones(4));
+    }
+
+    Flasher::new(sprintf('Profesor <b>%s</b> borrado con exito.', $profesor['nombre_completo']), 'success');
+    Redirect::to('profesores');
+
+  } catch (PDOException $e) {
+    Flasher::new($e->getMessage(), 'danger');
+    Redirect::back();
+  } catch (Exception $e) {
+    Flasher::new($e->getMessage(), 'danger');
+    Redirect::back();
+  }
+}
   
 }
