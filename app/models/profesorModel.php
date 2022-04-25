@@ -53,5 +53,15 @@ class profesorModel extends Model {
 
     return $id;
   }
+ static function quitar_materia($id_profesor, $id_materia)
+ {
+  $data = 
+  [
+    'id_materia' => $id_materia,
+    'id_profesor' => $id_profesor,
+  ];
+
+  return (self::remove('materias_profesores', $data)) ? true : false;
+ } 
 }
 

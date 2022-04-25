@@ -474,5 +474,52 @@ function add_materia_profesor(e) {
   })
 }
 
+// Quitar materia de profesor
+$('body').on('click', '.quitar_materia_profesor', quitar_materia_profesor);
+function quitar_materia_profesor(e) {
+  e.preventDefault();
+
+  var btn     = $(this),
+  wrapper     = $('.wrapper_materias_profesor'),
+  csrf        = Bee.csrf,
+  id_materia  = btn.data('id'),
+  id_profesor = wrapper.data('id'),
+  li          = btn.closest('li'),
+  action      = 'delete',
+  hook        = 'bee_hook';
+
+  if(!confirm('¿Estás seguro?')) return false;
+
+  $.ajax({
+    url: 'ajax/quitar_materia_profesor',
+    type: 'post',
+    dataType: 'json',
+    cache: false,
+    data: {
+      csrf,
+      id_materia,
+      id_profesor,
+      action,
+      hook
+    },
+    beforeSend: function() {
+      li.waitMe();
+    }
+  }).done(function(res) {
+    if(res.status === 200) {
+      toastr.success(res.msg, 'Bien!');
+      li.fadeOut();
+      get_materias_disponibles_profesor();
+      get_materias_profesor();
+    } else {
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err) {
+    toastr.error('Hubo un error en la petición', '¡Upss!');
+  }).always(function() {
+    li.waitMe('hide');
+  })
+}
+
 
 });
