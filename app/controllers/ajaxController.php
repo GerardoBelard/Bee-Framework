@@ -268,10 +268,7 @@ class ajaxController extends Controller {
     // se guardó con éxito
     json_output(json_build(200, null, 'Opciones actualizadas con éxito'));
   }
-  ///////////////////////////////////////////////////////
-  /////////////// TERMINA PROYECTO DEMO /////////////////
-  ///////////////////////////////////////////////////////
-
+  
   // Profesores
   function get_materias_disponibles_profesor()
   {
@@ -393,6 +390,26 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+  // Grupos
+  function get_materias_disponibles_grupo()
+  {
+    try {
+      if (!check_get_data(['_t', 'id_grupo'], $_GET) || !Csrf::validate($_GET["_t"])) {
+        throw new Exception(get_notificaciones());
+      }
 
+      $id = clean($_GET["id_grupo"]);
+
+      if (!$grupo = grupoModel::by_id($id)) {
+        throw new Exception('No existe el grupo en la base de datos.');
+      }
+
+      $materias = grupoModel::materias_disponibles($id);
+      json_output(json_build(200, $materias));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
   
   }

@@ -521,5 +521,62 @@ function quitar_materia_profesor(e) {
   })
 }
 
+// Cargar materias disponibles para grupo
+function get_materias_disponibles_grupo() {
 
+  var form    = $('#grupo_asignar_materia_form'),
+  select      = $('select', form),
+  id_grupo    = $('input[name="id_grupo"]', form).val(),
+  wrapper     = $('.wrapper_materias_grupo'),
+  opciones    = '',
+  _t          = Bee.csrf,
+  action      = 'get',
+  hook        = 'bee_hook';
+
+  if (form.length == 0) return;
+
+  // Limpiar las opciones al cargar
+  select.html('');
+
+  // AJAX
+  $.ajax({
+    url: 'ajax/get_materias_disponibles_grupo',
+    type: 'get',
+    dataType: 'json',
+    data : { 
+      _t,
+      id_grupo,
+      action,
+      hook
+    },
+    beforeSend: function() {
+      wrapper.waitMe();
+    }
+  }).done(function(res) {
+    if(res.status === 200) {
+      if (res.data.length === 0) {
+        select.html('<option disabled selected>No hay opciones disponibles.</option>')
+        $('button', form).attr('disabled', true);
+        return;
+      }
+      
+      $.each(res.data, function(i, m) {
+        opciones += '<option value="'+m.id+'">'+m.materia+' impartida por '+m.profesor+'</option>';
+      });
+
+      select.html(opciones);
+      $('button', form).attr('disabled', false);
+
+    } else {
+      select.html('<option disabled selected>No hay opciones disponibles.</option>')
+      $('button', form).attr('disabled', true);
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err) {
+    toastr.error('Hubo un error al cargar las materias', '¡Upss!');
+  }).always(function() {
+    wrapper.waitMe('hide');
+  })
+}
+get_materias_disponibles_grupo();
 });

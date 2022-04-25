@@ -33,5 +33,81 @@ class grupoModel extends Model {
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }
 
+  static function materias_disponibles($id)
+  {
+    $sql = 
+    'SELECT
+      mp.id,
+      m.nombre AS materia,
+      u.nombre_completo AS profesor
+    FROM
+      materias_profesores mp
+    LEFT JOIN materias m ON m.id = mp.id_materia
+    LEFT JOIN usuarios u ON u.id = mp.id_profesor
+    WHERE
+      mp.id NOT IN (
+        SELECT
+          gm.id_mp
+        FROM
+          grupos_materias gm
+        WHERE
+          gm.id_grupo = :id_grupo
+      )';
+
+    return ($rows = parent::query($sql, ['id_grupo' => $id])) ? $rows : [];
+  }
+  static function materias_asignadas($id, $id_profesor = null)
+  {
+    // Cargar las materias del grupo sin importar el profesor
+    if ($id_profesor === null) {
+      $sql = 
+      'SELECT
+        mp.id,
+        m.id AS id_materia,
+        m.nombre AS materia,
+        u.id AS id_profesor,
+        u.numero AS num_profesor,
+        u.nombre_completo AS profesor
+      FROM
+        materias_profesores mp
+      LEFT JOIN materias m ON m.id = mp.id_materia
+      LEFT JOIN usuarios u ON u.id = mp.id_profesor
+      WHERE
+        mp.id IN (
+          SELECT
+            gm.id_mp
+          FROM
+            grupos_materias gm
+          WHERE
+            gm.id_grupo = :id_grupo
+        )';
+  
+      return ($rows = parent::query($sql, ['id_grupo' => $id])) ? $rows : [];
+    }
+
+    $sql = 
+    'SELECT
+      mp.id,
+      m.id AS id_materia,
+      m.nombre AS materia,
+      u.id AS id_profesor,
+      u.numero AS num_profesor,
+      u.nombre_completo AS profesor
+    FROM
+      materias_profesores mp
+    LEFT JOIN materias m ON m.id = mp.id_materia
+    LEFT JOIN usuarios u ON u.id = mp.id_profesor
+    WHERE
+      mp.id IN (
+        SELECT
+          gm.id_mp
+        FROM
+          grupos_materias gm
+        WHERE
+          gm.id_grupo = :id_grupo
+      ) AND mp.id_profesor = :id_profesor';
+
+    return ($rows = parent::query($sql, ['id_grupo' => $id, 'id_profesor' => $id_profesor])) ? $rows : [];
+  }
 }
 
