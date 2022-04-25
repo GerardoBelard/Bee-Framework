@@ -411,5 +411,25 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
-  
+  function get_materias_grupo()
+  {
+    try {
+      if (!check_get_data(['_t', 'id_grupo'], $_GET) || !Csrf::validate($_GET["_t"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id = clean($_GET["id_grupo"]);
+
+      if (!$grupo = grupoModel::by_id($id)) {
+        throw new Exception('No existe el grupo en la base de datos.');
+      }
+
+      $materias = grupoModel::materias_asignadas($grupo['id']);
+      $html     = get_module('grupos/materias', $materias);
+      json_output(json_build(200, $html));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
   }

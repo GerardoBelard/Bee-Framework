@@ -579,4 +579,44 @@ function get_materias_disponibles_grupo() {
   })
 }
 get_materias_disponibles_grupo();
+
+ // Función para cargar las materias de un grupo
+ function get_materias_grupo() {
+
+  var wrapper = $('.wrapper_materias_grupo'),
+  id_grupo    = wrapper.data('id'),
+  _t          = Bee.csrf,
+  action      = 'get',
+  hook        = 'bee_hook';
+
+  if (wrapper.length == 0) return;
+
+  // AJAX
+  $.ajax({
+    url: 'ajax/get_materias_grupo',
+    type: 'get',
+    dataType: 'json',
+    data : { 
+      _t,
+      id_grupo,
+      action,
+      hook
+    },
+    beforeSend: function() {
+      wrapper.waitMe();
+    }
+  }).done(function(res) {
+    if(res.status === 200) {
+      wrapper.html(res.data);
+    } else {
+      wrapper.html(res.msg);
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err) {
+    toastr.error('Hubo un error en la petición.', '¡Upss!');
+  }).always(function() {
+    wrapper.waitMe('hide');
+  })
+}
+get_materias_grupo();
 });
