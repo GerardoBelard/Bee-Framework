@@ -294,24 +294,106 @@ class ajaxController extends Controller {
     }
   }
 
-function get_materias_profesor()
-{
+  function get_materias_profesor()
+  {
     try {
-        if (!check_get_data(['_t', 'id_profesor'], $_GET) || !Csrf::validate($_GET["_t"])) {
-            throw new Exception(get_notificaciones());
-        }
-        $id = clean($_GET["id_profesor"]);
+      if (!check_get_data(['_t', 'id_profesor'], $_GET) || !Csrf::validate($_GET["_t"])) {
+        throw new Exception(get_notificaciones());
+      }
 
-        if (!$profesor = profesorModel::by_id($id)) {
-            throw new Exception('No existe el profesor');
-        }
+      $id = clean($_GET["id_profesor"]);
 
-        $materias = materiaModel::materias_profesor($profesor['id']);
-        $html = get_module('profesores/materias', $materias);
-        json_output(json_build(200, $html));
+      if (!$profesor = profesorModel::by_id($id)) {
+        throw new Exception('No existe el profesor en la base de datos.');
+      }
 
-    } catch (Exception $e) {
-        json_output(json_build(400, $e->getMessage()));
+      $materias = materiaModel::materias_profesor($profesor['id']);
+      $html     = get_module('profesores/materias', $materias);
+      json_output(json_build(200, $html));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
+  function add_materia_profesor()
+  {
+    try {
+      if (!check_posted_data(['csrf', 'id_profesor', 'id_materia'], $_POST) || !Csrf::validate($_POST["csrf"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id_materia  = clean($_POST["id_materia"]);
+      $id_profesor = clean($_POST["id_profesor"]);
+
+      if (!$profesor = profesorModel::by_id($id_profesor)) {
+        throw new Exception('No existe el profesor en la base de datos.');
+      }
+
+      if (!$materia = materiaModel::by_id($id_materia)) {
+        throw new Exception('No existe la materia en la base de datos.');
+      }
+
+      // Validar que no este ya asignada la materia
+      if (materiaModel::list('materias_profesores', ['id_materia' => $id_materia, 'id_profesor' => $id_profesor])) {
+        throw new Exception(sprintf('La materia <b>%s</b> ya está asignada al profesor <b>%s</b>.', $materia['nombre'], $profesor['nombres']));
+      }
+
+      // Asignar la materia al profesor
+      if (profesorModel::asignar_materia($id_profesor, $id_materia) === false) {
+        throw new Exception(get_notificaciones(2));
+      }
+
+      $msg = sprintf('Nueva materia <b>%s</b> asignada con éxito.', $materia['nombre']);
+
+      json_output(json_build(201, $profesor, $msg));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  function quitar_materia_profesor()
+  {
+    try {
+      if (!check_posted_data(['csrf', 'id_profesor', 'id_materia'], $_POST) || !Csrf::validate($_POST["csrf"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id_materia  = clean($_POST["id_materia"]);
+      $id_profesor = clean($_POST["id_profesor"]);
+
+      if (!$profesor = profesorModel::by_id($id_profesor)) {
+        throw new Exception('No existe el profesor en la base de datos.');
+      }
+
+      if (!$materia = materiaModel::by_id($id_materia)) {
+        throw new Exception('No existe la materia en la base de datos.');
+      }
+
+      // Validar que exista la materia asignada
+      if (!materiaModel::list('materias_profesores', ['id_materia' => $id_materia, 'id_profesor' => $id_profesor])) {
+        throw new Exception(sprintf('La materia <b>%s</b> no está asignada al profesor <b>%s</b>.', $materia['nombre'], $profesor['nombres']));
+      }
+
+      // Quitar materia asignada
+      if (profesorModel::quitar_materia($id_profesor, $id_materia) === false) {
+        throw new Exception(get_notificaciones(4));
+      }
+
+      $msg = sprintf('La materia <b>%s</b> ha sido removida del profesor con éxito.', $materia['nombre']);
+
+      json_output(json_build(200, $profesor, $msg));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  
+  
 }

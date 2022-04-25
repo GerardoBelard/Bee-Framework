@@ -423,4 +423,56 @@ $(document).ready(function() {
     })
    }
 get_materias_profesor();
+
+
+// Agregar nueva materia al profesor
+$('#profesor_asignar_materia_form').on('submit', add_materia_profesor);
+function add_materia_profesor(e) {
+  e.preventDefault();
+
+  var form    = $('#profesor_asignar_materia_form'),
+  select      = $('select', form),
+  id_materia  = select.val(),
+  id_profesor = $('input[name="id"]', form).val(),
+  csrf        = $('input[name="csrf"]', form).val(),
+  action      = 'post',
+  hook        = 'bee_hook';
+
+  if (id_materia === undefined || id_materia === '') {
+    toastr.error('Selecciona una materia válida.');
+    return;
+  }
+
+  // AJAX
+  $.ajax({
+    url: 'ajax/add_materia_profesor',
+    type: 'post',
+    dataType: 'json',
+    data : { 
+      csrf,
+      id_materia,
+      id_profesor,
+      action,
+      hook
+    },
+    beforeSend: function() {
+      form.waitMe();
+    }
+  }).done(function(res) {
+    if(res.status === 201) {
+      toastr.success(res.msg);
+      get_materias_disponibles_profesor();
+      get_materias_profesor();
+
+    } else {
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err) {
+    toastr.error('Hubo un error en la petición.', '¡Upss!');
+  }).always(function() {
+    form.waitMe('hide');
+  })
+}
+
+
 });
