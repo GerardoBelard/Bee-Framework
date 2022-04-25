@@ -41,9 +41,8 @@
           </div>
       </div>
     </div>
-
-    <!-- Horario -->
-    <div class="card shadow mb-12">
+  <!-- Horario -->
+  <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
       <a href="#grupo_horario" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="grupo_horario">
@@ -58,8 +57,8 @@
                   <img src="<?php echo UPLOADED.$d->g->horario; ?>" alt="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>" class="img-fluid img-thumbnail">
                 </a>
               <?php else: ?>
-                <a href="<?php echo get_image('broken.png'); ?>" data-lightbox="Horario" title="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>">
-                  <img src="<?php echo get_image('broken.png'); ?>" alt="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>" class="img-fluid img-thumbnail">
+                <a href="<?php echo IMAGES.('broken.png'); ?>" data-lightbox="Horario" title="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>">
+                  <img src="<?php echo IMAGES.('broken.png'); ?>" alt="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>" class="img-fluid img-thumbnail">
                 </a>
                 <p class="text-muted"><?php echo sprintf('El archivo <b>%s</b> no existe o está dañado.', $d->g->horario); ?></p>
               <?php endif; ?>
@@ -70,8 +69,11 @@
       </div>
     </div>
   </div>
+
+  
 <!-- //                                    MATERIAS Y PROFESORES-->
-  <!-- Materias y profesores -->
+  
+<!-- Materias y profesores -->
   <div class="col-xl-6 col-md-6 col-12">
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
