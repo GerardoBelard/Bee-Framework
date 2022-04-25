@@ -1,7 +1,6 @@
 <?php require_once INCLUDES.'inc_header_minimal.php'; ?>
 
 <div class="container">
-
   <!-- Outer Row -->
   <div class="row justify-content-center">
 

@@ -343,7 +343,7 @@
                 <td class="wrapper">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td align="center"><img src="<?php echo IMAGES.'bee_logo.png'; ?>" alt="<?php echo get_sitename(); ?>" style="width: 150px;"></td>
+                      <td align="center"><img src="<?php echo get_logo(); ?>" alt="<?php echo get_sitename(); ?>" style="width: 150px;"></td>
                     </tr>
                   </table>
                 </td>
@@ -373,8 +373,8 @@
               <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Una calle en México #123, Dentro de una Colonia, CDMX, 87560</span>
-                    <br>¿No te gustan estos correos? <a href="https://github.com/Moxtrip69/Bee-Framework">Darse de baja</a>.
+                    <span class="apple-link">Calle 608 No. 300 y Av. 412, Col. San Juan de Aragón, Alcaldía. Gustavo A. Madero, C.P. 07470, México, CDMX</span>
+                    <br>Instituto Tecnologico Gustavo a. Madero<a href="https://gamadero.tecnm.mx/">NUNCA TE RINDAS <strong>:)</strong></a>.
                   </td>
                 </tr>
                 <tr>

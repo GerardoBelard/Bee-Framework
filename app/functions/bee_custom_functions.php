@@ -109,5 +109,32 @@ function format_estado_usuario($status)
 }
 
 
+/**
+ * Enviar email de activación de correo eletrónico
+ *
+ * @param int $id_usuario
+ * @return bool
+ */
+function mail_confirmar_cuenta($id_usuario)
+{
+  if (!$usuario = usuarioModel::by_id($id_usuario)) return false; // nuevo método creado en modelo
 
+  $nombre = $usuario['nombres'];
+  $hash   = $usuario['hash'];
+  $email  = $usuario['email'];
+  $status = $usuario['status'];
 
+  // Si no es pendiente el status no requiere activación
+  if ($status !== 'pendiente') return false;
+
+  $subject = sprintf('Confirma tu correo eletrónico por favor %s', $nombre);
+  $alt     = sprintf('Debes confirmar tu correo electrónico para poder ingresar a %s.', get_sitename());
+  $url     = buildURL(URL.'login/activate', ['email' => $email, 'hash' => $hash], false, false);
+  $text    = '¡Hola %s!<br>Para ingresar al sistema de <b>%s</b> primero debes confirmar tu dirección de correo electrónico dando clic en el siguiente enlace seguro: <a href="%s">%s</a>';
+  $body    = sprintf($text, $nombre, get_sitename(), $url, $url);
+
+  // Creando el correo electrónico
+  if (send_email(get_siteemail(), $email, $subject, $body, $alt) !== true) return false;
+
+  return true;
+}

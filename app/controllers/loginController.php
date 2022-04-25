@@ -48,6 +48,8 @@ if(!$user = usuarioModel::by_email($email)){
       Flasher::new('Las credenciales no son correctas.', 'danger');
     }
 
+   
+
     // Loggear al usuario
     Auth::login($user['id'], $user);
     Redirect::to('dashboard');

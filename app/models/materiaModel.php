@@ -9,10 +9,7 @@
 class materiaModel extends Model {
   public static $t1   = 'materias'; // Nombre de la tabla en la base de datos;
   
-  // Nombre de tabla 2 que talvez tenga conexiÃ³n con registros
-  //public static $t2 = '__tabla 2___'; 
-  //public static $t3 = '__tabla 3___'; 
-
+  
   function __construct()
   {
     // Constructor general
