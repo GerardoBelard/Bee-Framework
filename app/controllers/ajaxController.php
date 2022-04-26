@@ -571,4 +571,44 @@ class ajaxController extends Controller {
     }
   }
   
+  function suspender_alumno()
+  {
+    try {
+      if (!check_posted_data(['csrf', 'id_alumno'], $_POST) || !Csrf::validate($_POST["csrf"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id_alumno = clean($_POST["id_alumno"]);
+
+      if (!$alumno = alumnoModel::by_id($id_alumno)) {
+        throw new Exception('No existe el alumno en la base de datos.');
+      }
+
+      if ($alumno['status'] === 'suspendido') {
+        throw new Exception(sprintf('<b>%s</b> ya se encuentra suspendido.', $alumno['nombre_completo']));
+      }
+
+      if ($alumno['status'] === 'pendiente') {
+        throw new Exception(sprintf('No se puede suspender al alumno <b>%s</b>.', $alumno['nombre_completo']));
+      }
+
+      // Suspensión del alumno
+      if (alumnoModel::suspender($id_alumno) === false) {
+        throw new Exception(get_notificaciones(4));
+      }
+
+      
+
+      $msg = sprintf('El alumno <b>%s</b> ha sido suspendido con éxito.', $alumno['nombre_completo']);
+
+      json_output(json_build(200, $alumno, $msg));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  
   }
