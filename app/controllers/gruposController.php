@@ -1,36 +1,33 @@
 <?php
+
+//INDICA QUE EN ESTE SCRIPT SE SUBIERAN ARCHIDOS CON UPLOAD
 use \Verot\Upload\Upload;
 
-/**
- * Plantilla general de controladores
- * Versión 1.0.2
- *
- * Controlador de grupos
- */
-class gruposController extends Controller {
-  private $id  = null;
-  private $rol = null;
+class gruposController extends Controller
+{
+    private $id  = null;
+    private $rol = null;
 
-  function __construct()
-  {
-    // Validación de sesión de usuario, descomentar si requerida
-    if (!Auth::validate()) {
-      Flasher::new('Debes iniciar sesión primero.', 'danger');
-      Redirect::to('login');
+    public function __construct()
+    {
+        // Validación de sesión de usuario, descomentar si requerida
+        if (!Auth::validate()) {
+            Flasher::new('Debes iniciar sesión primero.', 'danger');
+            Redirect::to('login');
+        }
+
+        $this->id  = get_user('id');
+        $this->rol = get_user_role();
     }
-
-    $this->id  = get_user('id');
-    $this->rol = get_user_role();
-  }
   
-  function index()
-  {
-    if (!is_admin($this->rol)) {
-      Flasher::new(get_notificaciones(), 'danger');
-      Redirect::back();
-    }
+    public function index()
+    {
+        if (!is_admin($this->rol)) {
+            Flasher::new(get_notificaciones(), 'danger');
+            Redirect::back();
+        }
     
-    $data = 
+        $data =
     [
       'title'  => 'Todos los Grupos',
       'slug'   => 'grupos',
@@ -38,23 +35,23 @@ class gruposController extends Controller {
       'grupos' => grupoModel::all_paginated()
     ];
     
-    // Descomentar vista si requerida
-    View::render('index', $data);
-  }
-
-  function ver($id)
-  {
-    if (!is_admin($this->rol)) {
-      Flasher::new(get_notificaciones(), 'danger');
-      Redirect::back();
+        // Descomentar vista si requerida
+        View::render('index', $data);
     }
 
-    if (!$grupo = grupoModel::by_id($id)) {
-      Flasher::new('No existe el grupo en la base de datos.', 'danger');
-      Redirect::back();
-    }
+    public function ver($id)
+    {
+        if (!is_admin($this->rol)) {
+            Flasher::new(get_notificaciones(), 'danger');
+            Redirect::back();
+        }
 
-    $data =
+        if (!$grupo = grupoModel::by_id($id)) {
+            Flasher::new('No existe el grupo en la base de datos.', 'danger');
+            Redirect::back();
+        }
+
+        $data =
     [
       'title'  => sprintf('Grupo %s', $grupo['nombre']),
       'slug'   => 'grupos',
@@ -62,49 +59,49 @@ class gruposController extends Controller {
       'g'      => $grupo
     ];
 
-    View::render('ver', $data);
-  }
-
-  function agregar()
-  {
-    if (!is_admin($this->rol)) {
-      Flasher::new(get_notificaciones(), 'danger');
-      Redirect::back();
+        View::render('ver', $data);
     }
 
-    $data =
+    public function agregar()
+    {
+        if (!is_admin($this->rol)) {
+            Flasher::new(get_notificaciones(), 'danger');
+            Redirect::back();
+        }
+
+        $data =
     [
       'title'  => 'Agregar Grupo',
       'button' => ['url' => 'grupos', 'text' => '<i class="fas fa-table"></i> Todos los grupos'],
       'slug'   => 'grupos'
     ];
 
-    View::render('agregar', $data);
-  }
+        View::render('agregar', $data);
+    }
 
-  function post_agregar()
-  {
-    try {
-      if (!check_posted_data(['csrf','nombre','descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
-        throw new Exception(get_notificaciones());
-      }
+    public function post_agregar()
+    {
+        try {
+            if (!check_posted_data(['csrf','nombre','descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+                throw new Exception(get_notificaciones());
+            }
 
-      // Validar rol
-      if (!is_admin($this->rol)) {
-        throw new Exception(get_notificaciones(1));
-      }
+            // Validar rol
+            if (!is_admin($this->rol)) {
+                throw new Exception(get_notificaciones(1));
+            }
 
-      $nombre      = clean($_POST["nombre"]);
-      $descripcion = clean($_POST["descripcion"]);
+            $nombre      = clean($_POST["nombre"]);
+            $descripcion = clean($_POST["descripcion"]);
 
 
-      // Validar que el nombre del grupo no exista en la base de datos
-      $sql = 'SELECT * FROM grupos WHERE nombre = :nombre LIMIT 1';
-      if (grupoModel::query($sql, ['nombre' => $nombre])) {
-        throw new Exception(sprintf('Ya existe el grupo <b>%s</b> en la base de datos.', $nombre));
-      }
+            // Validar que el nombre del grupo no exista en la base de datos
+            $sql = 'SELECT * FROM grupos WHERE nombre = :nombre LIMIT 1';
+            if (grupoModel::query($sql, ['nombre' => $nombre])) {
+                throw new Exception(sprintf('Ya existe el grupo <b>%s</b> en la base de datos.', $nombre));
+            }
 
-      $data =
+            $data =
       [
         'numero'      => null,
         'nombre'      => $nombre,
@@ -113,79 +110,112 @@ class gruposController extends Controller {
         'creado'      => now()
       ];
 
-      // Insertar a la base de datos
-      if (!$id = grupoModel::add(grupoModel::$t1, $data)) {
-        throw new Exception(get_notificaciones(2));
-      }
+            // Insertar a la base de datos
+            if (!$id = grupoModel::add(grupoModel::$t1, $data)) {
+                throw new Exception(get_notificaciones(2));
+            }
 
-      Flasher::new(sprintf('Nuevo grupo <b>%s</b> agregado con éxito.', $nombre), 'success');
-      Redirect::back();
-
-    } catch (PDOException $e) {
-      Flasher::new($e->getMessage(), 'danger');
-      Redirect::back();
-    } catch (Exception $e) {
-      Flasher::new($e->getMessage(), 'danger');
-      Redirect::back();
+            Flasher::new(sprintf('Nuevo grupo <b>%s</b> agregado con éxito.', $nombre), 'success');
+            Redirect::back();
+        } catch (PDOException $e) {
+            Flasher::new($e->getMessage(), 'danger');
+            Redirect::back();
+        } catch (Exception $e) {
+            Flasher::new($e->getMessage(), 'danger');
+            Redirect::back();
+        }
     }
-  }
 
-  function post_editar()
-  {
-    try {
-      if (!check_posted_data(['csrf','id','nombre','descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
-        throw new Exception(get_notificaciones());
-      }
+    public function post_editar()
+    {
+        try {
+            if (!check_posted_data(['csrf','id','nombre','descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+                throw new Exception(get_notificaciones());
+            }
 
-      // Validar rol
-      if (!is_admin($this->rol)) {
-        throw new Exception(get_notificaciones(1));
-      }
+            // Validar rol
+            if (!is_admin($this->rol)) {
+                throw new Exception(get_notificaciones(1));
+            }
 
-      $id          = clean($_POST["id"]);
-      $numero      = clean($_POST["numero"]);
-      $nombre      = clean($_POST["nombre"]);
-      $descripcion = clean($_POST["descripcion"]);
-      $horario     = $_FILES["horario"];
-      $n_horario   = false;
+            $id          = clean($_POST["id"]);
+            $nombre      = clean($_POST["nombre"]);
+            $descripcion = clean($_POST["descripcion"]);
+            $horario     = $_FILES["horario"];
+            $n_horario   = false;
 
-      if (!$grupo = grupoModel::by_id($id)) {
-        throw new Exception('No existe el grupo en la base de datos.');
-      }
+            if (!$grupo = grupoModel::by_id($id)) {
+                throw new Exception('No existe el grupo en la base de datos.');
+            }
 
-      $db_horario = $grupo['horario'];
+            $db_horario = $grupo['horario'];
 
-      
-      // Validar que el nombre del grupo no exista en la base de datos
-      $sql = 'SELECT * FROM grupos WHERE id != :id AND nombre = :nombre LIMIT 1';
-      if (grupoModel::query($sql, ['id' => $id, 'nombre' => $nombre])) {
-        throw new Exception(sprintf('Ya existe el grupo <b>%s</b> en la base de datos.', $nombre));
-      }
 
-      $data =
+            // Validar que el nombre del grupo no exista en la base de datos
+            $sql = 'SELECT * FROM grupos WHERE id != :id AND nombre = :nombre LIMIT 1';
+            if (grupoModel::query($sql, ['id' => $id, 'nombre' => $nombre])) {
+                throw new Exception(sprintf('Ya existe el grupo <b>%s</b> en la base de datos.', $nombre));
+            }
+
+            $data =
       [
-        'numero'  => $numero,
-         'nombre'      => $nombre,
+        'nombre'      => $nombre,
         'descripcion' => $descripcion
       ];
       
-     
+            // Validar si se está subiendo una imagen
+            if ($horario['error'] !== 4) {
+                $tmp  = $horario['tmp_name'];
+                $name = $horario['name'];
+                $ext  = pathinfo($name, PATHINFO_EXTENSION);
 
-      // Insertar a la base de datos
-      if (!grupoModel::update(grupoModel::$t1, ['id' => $id], $data)) {
-        throw new Exception(get_notificaciones(3));
-      }
+                // Validar extensión del archivo
+                if (!in_array($ext, ['jpg','png','jpeg','bmp'])) {
+                    throw new Exception('Selecciona un formato de imagen válido.');
+                }
 
-      Flasher::new(sprintf('Grupo <b>%s</b> actualizado con éxito.', $nombre), 'success');
-      Redirect::back();
+                $foo = new upload($horario);
+                if (!$foo->uploaded) {
+                    throw new Exception('Hubo un problema al subir el archivo.');
+                }
 
-    } catch (PDOException $e) {
-      Flasher::new($e->getMessage(), 'danger');
-      Redirect::back();
-    } catch (Exception $e) {
-      Flasher::new($e->getMessage(), 'danger');
-      Redirect::back();
+                // Nuevo nombre y nuevas medidas de la imagen
+                $filename                = generate_filename();
+                $foo->file_new_name_body = $filename;
+                $foo->image_resize       = true;
+                $foo->image_x            = 800;
+                $foo->image_ratio_y      = true;
+
+                $foo->process(UPLOADS);
+                if (!$foo->processed) {
+                    throw new Exception('Hubo un problema al guardar la imagen en el servidor.');
+                }
+
+                $data['horario'] = sprintf('%s.%s', $filename, $ext);
+                $n_horario       = true;
+            }
+
+            // Insertar a la base de datos
+            if (!grupoModel::update(grupoModel::$t1, ['id' => $id], $data)) {
+                throw new Exception(get_notificaciones(3));
+            }
+
+            // Borrado del horario anterior en caso de actualización
+            if ($db_horario !== null && $n_horario === true && is_file(UPLOADS.$db_horario)) {
+                unlink(UPLOADS.$horario);
+            }
+
+            Flasher::new(sprintf('Grupo <b>%s</b> actualizado con éxito.', $nombre), 'success');
+            Redirect::back();
+        } catch (PDOException $e) {
+            Flasher::new($e->getMessage(), 'danger');
+            Redirect::back();
+        } catch (Exception $e) {
+            Flasher::new($e->getMessage(), 'danger');
+            Redirect::back();
+        }
     }
-  }
-
 }
+ 
+
+
