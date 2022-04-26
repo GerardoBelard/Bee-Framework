@@ -215,6 +215,45 @@ class gruposController extends Controller
             Redirect::back();
         }
     }
+
+    function borrar($id)
+    {
+      try {
+        if (!check_get_data(['_t'], $_GET) || !Csrf::validate($_GET['_t'])) {
+          throw new Exception(get_notificaciones());
+        }
+  
+        // Validar rol
+        if (!is_admin($this->rol)) {
+          throw new Exception(get_notificaciones(1));
+        }
+  
+        // Exista el grupo
+        if (!$grupo = grupoModel::by_id($id)) {
+          throw new Exception('No existe el grupo en la base de datos.');
+        }
+  
+        // Borramos el registro y sus conexiones
+        if (grupoModel::eliminar($grupo['id']) === false) {
+          throw new Exception(get_notificaciones(4));
+        }
+  
+        // Borrar la imagen del horario
+        if (is_file(UPLOADS.$grupo['horario'])) {
+          unlink(UPLOADS.$grupo['horario']);
+        }
+  
+        Flasher::new(sprintf('Grupo <b>%s</b> borrado con éxito.', $grupo['nombre']), 'success');
+        Redirect::to('grupos');
+  
+      } catch (PDOException $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+      } catch (Exception $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+      }
+    }
 }
  
 
