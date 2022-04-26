@@ -91,7 +91,8 @@ class gruposController extends Controller
                 throw new Exception(get_notificaciones(1));
             }
 
-            $nombre      = clean($_POST["nombre"]);
+            $numero = clean($_POST["numero"]);
+            $nombre = clean($_POST["nombre"]);
             $descripcion = clean($_POST["descripcion"]);
 
 
@@ -103,7 +104,7 @@ class gruposController extends Controller
 
             $data =
       [
-        'numero'      => null,
+        'numero'      => '',
         'nombre'      => $nombre,
         'descripcion' => $descripcion,
         'horario'     => null,
@@ -139,6 +140,7 @@ class gruposController extends Controller
             }
 
             $id          = clean($_POST["id"]);
+            $numero = clean($_POST["numero"]);
             $nombre      = clean($_POST["nombre"]);
             $descripcion = clean($_POST["descripcion"]);
             $horario     = $_FILES["horario"];
@@ -159,6 +161,7 @@ class gruposController extends Controller
 
             $data =
       [
+          'numero' => $numero,
         'nombre'      => $nombre,
         'descripcion' => $descripcion
       ];

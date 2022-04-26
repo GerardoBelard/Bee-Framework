@@ -18,6 +18,10 @@
               <input type="hidden" name="id" value="<?php echo $d->g->id; ?>" required>
               
               <div class="form-group">
+                <label for="nombre">Numero</label>
+                <input type="text" class="form-control" id="numero" name="numero" value="<?php echo $d->g->numero; ?>" required>
+              </div>
+              <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $d->g->nombre; ?>" required>
               </div>

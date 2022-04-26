@@ -15,6 +15,8 @@
             <form action="grupos/post_agregar" method="post">
               <?php echo insert_inputs(); ?>
               
+             
+
               <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" required>
