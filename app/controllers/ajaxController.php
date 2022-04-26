@@ -510,4 +510,65 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
+  function get_alumnos_grupo()
+  {
+    try {
+      if (!check_get_data(['_t', 'id_grupo'], $_GET) || !Csrf::validate($_GET["_t"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id = clean($_GET["id_grupo"]);
+
+      if (!$grupo = grupoModel::by_id($id)) {
+        throw new Exception('No existe el grupo en la base de datos.');
+      }
+
+      $alumnos  = grupoModel::alumnos_asignados($grupo['id']);
+      $html     = get_module('grupos/alumnos', $alumnos);
+      json_output(json_build(200, $html));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+  function quitar_alumno_grupo()
+  {
+    try {
+      if (!check_posted_data(['csrf', 'id_grupo', 'id_alumno'], $_POST) || !Csrf::validate($_POST["csrf"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id_grupo = clean($_POST["id_grupo"]);
+      $id_alumno = clean($_POST["id_alumno"]);
+
+      if (!$grupo = grupoModel::by_id($id_grupo)) {
+        throw new Exception('No existe el grupo en la base de datos.');
+      }
+
+      if (!$alumno = alumnoModel::by_id($id_alumno)) {
+        throw new Exception('No existe el alumno en la base de datos.');
+      }
+
+      // Validar que exista el alumno asignado
+      if (!grupoModel::list(grupoModel::$t3, ['id_grupo' => $id_grupo, 'id_alumno' => $id_alumno])) {
+        throw new Exception('El alumno no está inscrito a este grupo.');
+      }
+
+      // Quitar al alumno asignado
+      if (grupoModel::quitar_alumno($id_grupo, $id_alumno) === false) {
+        throw new Exception(get_notificaciones(4));
+      }
+
+      $msg = sprintf('El alumno ha sido removido del grupo <b>%s</b> con éxito.', $grupo['nombre']);
+
+      json_output(json_build(200, $grupo, $msg));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+  
   }

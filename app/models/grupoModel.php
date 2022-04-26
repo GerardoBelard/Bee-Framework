@@ -1,14 +1,12 @@
 <?php
 
-/**
- * Plantilla general de modelos
- * Versión 1.0.1
- *
- * Modelo de grupo
- */
+
 class grupoModel extends Model {
-  public static $t1   = 'grupos'; 
+  public static $t1 = 'grupos'; 
   public static $t2 = 'grupos_materias';
+  public static $t3 = 'grupos_alumnos';
+  
+
   function __construct()
   {
     // Constructor general
@@ -20,6 +18,7 @@ class grupoModel extends Model {
     $sql = 'SELECT * FROM grupos ORDER BY id DESC';
     return ($rows = parent::query($sql)) ? $rows : [];
   }
+
   static function all_paginated()
   {
     // Todos los registros
@@ -57,6 +56,7 @@ class grupoModel extends Model {
 
     return ($rows = parent::query($sql, ['id_grupo' => $id])) ? $rows : [];
   }
+
   static function materias_asignadas($id, $id_profesor = null)
   {
     // Cargar las materias del grupo sin importar el profesor
@@ -110,6 +110,7 @@ class grupoModel extends Model {
 
     return ($rows = parent::query($sql, ['id_grupo' => $id, 'id_profesor' => $id_profesor])) ? $rows : [];
   }
+
   static function asignar_materia($id_grupo, $id_mp)
   {
     $data =
@@ -133,5 +134,70 @@ class grupoModel extends Model {
 
     return (self::remove(self::$t2, $data)) ? true : false;
   }
-}
 
+  static function alumnos_asignados($id_grupo)
+  {
+    $sql = 
+    'SELECT
+      u.*
+    FROM
+      usuarios u
+    JOIN grupos_alumnos ga ON u.id = ga.id_alumno
+    JOIN grupos g ON g.id = ga.id_grupo
+    WHERE
+      g.id = :id
+    AND u.rol = "alumno"';
+
+    return ($rows = parent::query($sql, ['id' => $id_grupo])) ? $rows : [];
+  }
+
+  static function quitar_alumno($id_grupo, $id_alumno)
+  {
+    $data =
+    [
+      'id_grupo' => $id_grupo,
+      'id_alumno' => $id_alumno
+    ];
+
+    return (self::remove(self::$t3, $data)) ? true : false;
+  }
+
+  static function eliminar($id_grupo)
+  {
+    $sql = 
+    'DELETE g, gm, ga 
+    FROM grupos g 
+    LEFT JOIN grupos_materias gm ON g.id = gm.id_grupo
+    LEFT JOIN grupos_alumnos ga ON g.id = ga.id_grupo 
+    WHERE g.id = :id';
+    return parent::query($sql, ['id' => $id_grupo]) ? true : false;
+  }
+
+  static function by_alumno($id_alumno)
+  {
+    $sql = 
+    'SELECT
+      g.*
+    FROM
+      grupos g
+    JOIN grupos_alumnos ga ON ga.id_grupo = g.id
+    JOIN usuarios u ON u.id = ga.id_alumno
+    WHERE
+      u.id = :id
+    AND u.rol = "alumno"';
+
+    $grupo = [];
+    $rows  = parent::query($sql, ['id' => $id_alumno]);
+
+    if (!$rows) return $grupo;
+
+    // Cargando materias
+    $grupo = $rows[0];
+    $grupo['materias'] = grupoModel::materias_asignadas($grupo['id']);
+    
+    // Cargando compaÃ±eros
+    $grupo['alumnos']  = grupoModel::alumnos_asignados($grupo['id']);
+
+    return $grupo;
+  }
+}

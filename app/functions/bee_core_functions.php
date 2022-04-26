@@ -1353,7 +1353,14 @@ function upload_image($file_field = null, $check_image = false, $random_name = f
 	return $out;
 }
 
+function get_image($filename)
+{
+	if (!is_file(IMAGES_PATH.$filename)) {
+		return IMAGES.'broken.png';
+	}
 
+	return IMAGES.$filename;
+}
 /**
  * Registra los scripts y estilos del editor textual Summernote
  *

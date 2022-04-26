@@ -2,7 +2,7 @@
 
 <div class="row">
   <!-- info del grupo -->
-  <div class="col-xl-6 col-md-6 col-12">
+  <div class="col-xl-4 col-md-6 col-12">
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
@@ -17,10 +17,6 @@
               <?php echo insert_inputs(); ?>
               <input type="hidden" name="id" value="<?php echo $d->g->id; ?>" required>
               
-              <div class="form-group">
-                <label for="nombre">Numero</label>
-                <input type="text" class="form-control" id="numero" name="numero" value="<?php echo $d->g->numero; ?>" required>
-              </div>
               <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $d->g->nombre; ?>" required>
@@ -41,8 +37,9 @@
           </div>
       </div>
     </div>
-  <!-- Horario -->
-  <div class="card shadow mb-4">
+
+    <!-- Horario -->
+    <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
       <a href="#grupo_horario" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="grupo_horario">
@@ -70,11 +67,8 @@
     </div>
   </div>
 
-  
-<!-- //                                    MATERIAS Y PROFESORES-->
-  
-<!-- Materias y profesores -->
-  <div class="col-xl-6 col-md-6 col-12">
+  <!-- Materias y profesores -->
+  <div class="col-xl-4 col-md-6 col-12">
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
@@ -92,7 +86,7 @@
               <div class="form-group">
                 <label for="id_mp">Selecciona una opción disponible</label>
                 <select name="id_mp" id="id_mp" class="form-control" required>
-                  <option value="">Materia impartida por...</option>
+                  <option value="">Materia impartida por Juanito</option>
                 </select>
               </div>
 
@@ -106,7 +100,26 @@
       </div>
     </div>
   </div>
-  
-  
-  
-  <?php require_once INCLUDES.'inc_footer.php'; ?>
+
+  <!-- Alumnos -->
+  <div class="col-xl-4 col-md-6 col-12">
+    <!-- Collapsable Card Example -->
+    <div class="card shadow mb-4">
+      <!-- Card Header - Accordion -->
+      <a href="#grupo_alumnos" class="d-block card-header py-3" data-toggle="collapse"
+          role="button" aria-expanded="true" aria-controls="grupo_alumnos">
+          <h6 class="m-0 font-weight-bold text-primary">Alumnos inscritos</h6>
+      </a>
+      <!-- Card Content - Collapse -->
+      <div class="collapse show" id="grupo_alumnos">
+        <div class="card-body">
+          <div class="wrapper_alumnos_grupo" data-id="<?php echo $d->g->id; ?>">
+            <!-- ajax filled -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php require_once INCLUDES.'inc_footer.php'; ?>
