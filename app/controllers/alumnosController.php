@@ -108,15 +108,7 @@ $numero = clean($_POST["numero"]);
         throw new Exception('Ingresa un correo electrónico válido.');
       }
 
-      // Validar el nombre del usuario
-      if (strlen($nombres) < 5) {
-        throw new Exception('Ingresa un nombre válido.');
-      }
-
-      // Validar el apellido del usuario
-      if (strlen($apellidos) < 5) {
-        throw new Exception('Ingresa un apellido válido.');
-      }
+      
 
       // Validar el password del usuario
       if (strlen($password) < 5) {
@@ -230,15 +222,7 @@ $numero = clean($_POST["numero"]);
         throw new Exception('Ingresa un correo electrónico válido.');
       }
 
-      // Validar el nombre del usuario
-      if (strlen($nombres) < 5) {
-        throw new Exception('Ingresa un nombre válido.');
-      }
-
-      // Validar el apellido del usuario
-      if (strlen($apellidos) < 5) {
-        throw new Exception('Ingresa un apellido válido.');
-      }
+     
 
       // Validar el password del usuario
       $pw_ok = password_verify($db_pw, $password.AUTH_SALT);
