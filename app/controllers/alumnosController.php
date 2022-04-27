@@ -43,7 +43,7 @@ class alumnosController extends Controller {
 
   function ver($id)
   {
-    if (!is_admin($this->rol)) {
+    if (!$alumno = ($this->rol)) {
       Flasher::new(get_notificaciones(), 'danger');
       Redirect::back();
     }
@@ -86,7 +86,7 @@ class alumnosController extends Controller {
   function post_agregar()
   {
     try {
-      if (!check_posted_data(['csrf','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+      if (!check_posted_data(['csrf','numero','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
         throw new Exception(get_notificaciones());
       }
 
@@ -94,35 +94,21 @@ class alumnosController extends Controller {
       if (!is_admin($this->rol)) {
         throw new Exception(get_notificaciones(1));
       }
-
-      $nombres       = clean($_POST["nombres"]);
-      $apellidos     = clean($_POST["apellidos"]);
-      $email         = clean($_POST["email"]);
-      $telefono      = clean($_POST["telefono"]);
-      $password      = clean($_POST["password"]);
+      $numero = clean($_POST["numero"]);
+      $nombres = clean($_POST["nombres"]);
+      $apellidos = clean($_POST["apellidos"]);
+      $email = clean($_POST["email"]);
+      $telefono = clean($_POST["telefono"]);
+      $password = clean($_POST["password"]);
       $conf_password = clean($_POST["conf_password"]);
-      $id_grupo      = clean($_POST["id_grupo"]);
+      $id_grupo = clean($_POST["id_grupo"]);
 
       // Validar que el correo sea válido
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception('Ingresa un correo electrónico válido.');
+        //throw new Exception('Ingresa un correo electrónico válido.');
       }
 
-      // Validar el nombre del usuario
-      if (strlen($nombres) < 5) {
-        throw new Exception('Ingresa un nombre válido.');
-      }
-
-      // Validar el apellido del usuario
-      if (strlen($apellidos) < 5) {
-        throw new Exception('Ingresa un apellido válido.');
-      }
-
-      // Validar el password del usuario
-      if (strlen($password) < 5) {
-        throw new Exception('Ingresa una contraseña mayor a 5 caracteres.');
-      }
-
+      
       // Validar ambas contraseñas
       if ($password !== $conf_password) {
         throw new Exception('Las contraseñas no son iguales.');
@@ -135,7 +121,7 @@ class alumnosController extends Controller {
 
       $data   =
       [
-        'numero'          => rand(111111, 999999),
+        'numero'          => $numero,
         'nombres'         => $nombres,
         'apellidos'       => $apellidos,
         'nombre_completo' => sprintf('%s %s', $nombres, $apellidos),
@@ -229,19 +215,10 @@ class alumnosController extends Controller {
         throw new Exception('Ingresa un correo electrónico válido.');
       }
 
-      // Validar el nombre del usuario
-      if (strlen($nombres) < 5) {
-        throw new Exception('Ingresa un nombre válido.');
-      }
-
-      // Validar el apellido del usuario
-      if (strlen($apellidos) < 5) {
-        throw new Exception('Ingresa un apellido válido.');
-      }
-
+    
       // Validar el password del usuario
       $pw_ok = password_verify($db_pw, $password.AUTH_SALT);
-      if (!empty($password) && $pw_ok === false && strlen($password) < 5) {
+      if (!empty($password) && $pw_ok === false ) {
         throw new Exception('Ingresa una contraseña mayor a 5 caracteres.');
       }
 
