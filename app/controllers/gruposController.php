@@ -61,7 +61,9 @@ class gruposController extends Controller
 
         View::render('ver', $data);
     }
-
+    
+   
+    
     public function agregar()
     {
         if (!is_admin($this->rol)) {
@@ -257,6 +259,91 @@ class gruposController extends Controller
         Redirect::back();
       }
     }
+
+      // Para profesores
+  function asignados()
+  {
+    if (is_admin($this->rol)) {
+      Redirect::to('grupos');
+    }
+
+    if (!is_profesor($this->rol)) {
+      Flasher::deny();
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => 'Grupos Asignados',
+      'slug'   => 'grupos',
+      'grupos' => profesorModel::grupos_asignados($this->id)
+    ];
+
+    View::render('asignados', $data);
+  }
+
+  function detalles($id)
+  {
+    if (is_admin($this->rol)) {
+      Redirect::to(sprintf('grupos/ver/%s', $id));
+    }
+
+    if (!is_profesor($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
+
+    if (!$grupo = grupoModel::by_id($id)) {
+      Flasher::new('No existe el grupo en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $grupo['materias'] = grupoModel::materias_asignadas($id, $this->id);
+    $grupo['alumnos']  = grupoModel::alumnos_asignados($id);
+
+    if (!profesorModel::asignado_a_grupo($this->id, $id)) {
+      Flasher::new('No eres profesor de este grupo.', 'danger');
+      Redirect::to('grupos/asignados');
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Grupo %s', $grupo['nombre']),
+      'slug'   => 'grupos',
+      'button' => ['url' => 'grupos/asignados', 'text' => '<i class="fas fa-table"></i> Todos mis grupos'],
+      'g'      => $grupo
+    ];
+
+    View::render('detalles', $data);
+  }
+
+  function materia($id)
+  {
+    if (is_admin($this->rol)) {
+      Redirect::to(sprintf('materias/ver/%s', $id));
+    }
+
+    if (!is_profesor($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
+
+    if (!$materia = materiaModel::by_id($id)) {
+      Flasher::new('No existe la materia en la base de datos.', 'danger');
+      Redirect::to('materias');
+    }
+
+    $data = 
+    [
+      'title'     => sprintf('Lecciones disponibles para %s', $materia['nombre']),
+      'slug'      => 'grupos',
+      'button'    => ['url' => 'materias/asignadas', 'text' => '<i class="fas fa-undo"></i> Mis materias'],
+      'materia'   => $materia,
+      'lecciones' => leccionModel::by_materia_profesor($id, $this->id)
+    ];
+
+    View::render('materia', $data);
+  }
 }
  
 

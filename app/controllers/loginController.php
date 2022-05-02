@@ -88,10 +88,10 @@ class loginController extends Controller {
       }
 
       // Validar el status del usuario
-      if ($user['status'] === 'pendiente') {
-        mail_confirmar_cuenta($user['id']);
-        throw new Exception('Confirma tu dirección de correo electrónico.');
-      }
+    //  if ($user['status'] === 'pendiente') {
+      //  mail_confirmar_cuenta($user['id']);
+        //throw new Exception('Confirma tu dirección de correo electrónico.');
+  //    }
   
       // Loggear al usuario
       Auth::login($user['id'], $user);
