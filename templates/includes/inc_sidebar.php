@@ -2,9 +2,14 @@
 $slug = isset($d->slug) && !empty($d->slug) ? $d->slug : 'dashboard';
 ?>
 
+<style>
+    .fondoItgam{
+        background-color=#1B396A;
+    }
+</style>
 
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark  fondoItgam accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo URL ?>">
@@ -16,12 +21,12 @@ $slug = isset($d->slug) && !empty($d->slug) ? $d->slug : 'dashboard';
     <hr class="sidebar-divider my-0">
     
     
-    <?php if (is_admin(get_user_role())): ?>
+   <!-- <?php if (is_admin(get_user_role())): ?>
          <li class="nav-item <?php echo $slug === 'admin' ? 'active' : null; ?>">
         <a class="nav-link" href="admin">
             <i class="fas fa-fw fa-user-lock"></i>
             <span>Administracion</span></a>
-    </li>
+    </li>-->
   
         
     <?php endif; ?>
@@ -52,7 +57,7 @@ $slug = isset($d->slug) && !empty($d->slug) ? $d->slug : 'dashboard';
   <li class="nav-item <?php echo $slug === 'alumnos' ? 'active' : null; ?>">
         <a class="nav-link" href="alumnos">
             <i class="fas fa-fw fa-book-reader"></i>
-            <span>Alumnos</span></a>
+            <span>Estudiantes</span></a>
     </li>
 
 
@@ -60,7 +65,7 @@ $slug = isset($d->slug) && !empty($d->slug) ? $d->slug : 'dashboard';
      <li class="nav-item<?php echo $slug === 'materias' ? 'active' : null; ?>">
         <a class="nav-link" href="materias">
             <i class="fas fa-fw fa-book"></i>
-            <span>Materias</span></a>
+            <span>Niveles</span></a>
     </li>
 
 <!-- Nav Item - Grupos -->
@@ -70,19 +75,19 @@ $slug = isset($d->slug) && !empty($d->slug) ? $d->slug : 'dashboard';
             <span>Grupos</span></a>
     </li>
 
-    <!-- Nav Item - Horarios -->
+    <!-- Nav Item - Horarios
   <li class="nav-item<?php echo $slug === 'horarios' ? 'active' : null; ?>">
         <a class="nav-link" href="horarios">
             <i class="fas fa-fw fa-book-reader"></i>
             <span>Horario</span></a>
-    </li>
+    </li> -->
 
-    <!-- Nav Item - lecciones -->
+    <!-- Nav Item - lecciones 
   <li class="nav-item<?php echo $slug === 'lecciones' ? 'active' : null; ?>">
         <a class="nav-link" href="lecciones">
             <i class="fas fa-fw fa-chalkboard-teacher"></i>
             <span>Lecciones</span></a>
-    </li>
+    </li>-->
 
 
   

@@ -28,6 +28,7 @@
 								<td>
 									<div class="btn-group">
 										<a href="<?php echo 'alumnos/ver/'.$a->id; ?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
+										<a href="<?php echo 'alumnos/ver_calificaciones/'.$a->id; ?>" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>
                     <?php if ($a->status === 'suspendido'): ?>
                       <button class="btn btn-warning text-dark btn-sm remover_suspension_alumno" data-view="alumnos" data-id="<?php echo $a->id; ?>"><i class="fas fa-undo"></i></button>
                     <?php else: ?>

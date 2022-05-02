@@ -2,6 +2,9 @@
 
 class alumnoModel extends Model {
   public static $t1   = 'usuarios'; 
+  public static $t2   = 'calificaciones'; 
+
+
 
   function __construct()
   {
@@ -31,6 +34,19 @@ class alumnoModel extends Model {
     FROM usuarios u
     LEFT JOIN grupos_alumnos ga ON ga.id_alumno = u.id
     WHERE u.id = :id AND u.rol = "alumno" 
+    LIMIT 1';
+    return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
+  }
+
+  static function by_idca($id)
+  {
+    // Un registro con $id
+    $sql = 'SELECT 
+    u.*,
+    ga.id
+    FROM calificaciones u
+    LEFT JOIN usuarios ga ON ga.id= u.usuarioid
+    WHERE u.usuarioid = :id AND ga.rol = "alumno" 
     LIMIT 1';
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }

@@ -10,6 +10,7 @@ class alumnosController extends Controller {
   private $id  = null;
   private $rol = null;
 
+
   function __construct()
   {
     // Validación de sesión de usuario, descomentar si requerida
@@ -31,9 +32,9 @@ class alumnosController extends Controller {
 
     $data = 
     [
-      'title'   => 'Todos los Alumnos',
-      'slug'    => 'alumnos',
-      'button'  => ['url' => 'alumnos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar alumno'],
+      'title'   => 'Todos los Estudiantes',
+      'slug'    => 'Estudiantes',
+      'button'  => ['url' => 'alumnos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Estudiante'],
       'alumnos' => alumnoModel::all_paginated()
     ];
     
@@ -65,6 +66,95 @@ class alumnosController extends Controller {
     View::render('ver', $data);
   }
 
+  function ver_calificaciones($id)
+  {
+    if (!is_admin($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
+    
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['usuarioid']),
+      'slug'   => 'alumnos',
+      'button' => ['url' => 'alumnos', 'text' => '<i class="fas fa-table"></i> Alumnos'],
+      'grupos' => grupoModel::all(),
+      'a'      => $alumno
+    ];
+
+    View::render('ver_calificaciones', $data);
+  }
+
+  function editar_calificaciones()
+  {
+      // Validar rol
+      if (!is_admin($this->rol)) {
+        throw new Exception(get_notificaciones(1));
+      }
+
+       // Validar existencia del alumno
+      $id = clean($_POST["id"]);
+      if (!$alumno = alumnoModel::by_idca($id)) {
+        throw new Exception('No existe el alumno en la base de datos.');
+      }
+
+      $basico1       = clean($_POST["basico1"]);
+      $basico2       = clean($_POST["basico2"]);
+      $basico3       = clean($_POST["basico3"]);
+      $basico4       = clean($_POST["basico4"]);
+      $basico5        = clean($_POST["basico5"]);
+      $intermedio1       = clean($_POST["intermedio1"]);
+      $intermedio2       = clean($_POST["intermedio2"]);
+      $intermedio3       = clean($_POST["intermedio3"]);
+      $intermedio4       = clean($_POST["intermedio4"]);
+      $intermedio5        = clean($_POST["intermedio5"]);
+      $avanzado1       = clean($_POST["avanzado1"]);
+      $avanzado2       = clean($_POST["avanzado2"]);
+      $avanzado3       = clean($_POST["avanzado3"]);
+      $avanzado4       = clean($_POST["avanzado4"]);
+      $avanzado5        = clean($_POST["avanzado5"]);
+
+
+      $data   =
+      [
+        'basico1'         => $basico1,
+        'basico2'         => $basico2,
+        'basico3'         => $basico3,
+        'basico4'         => $basico4,
+        'basico5'         => $basico5,
+        'intermedio1'         => $intermedio1,
+        'intermedio2'         => $intermedio2,
+        'intermedio3'         => $intermedio3,
+        'intermedio4'         => $intermedio4,
+        'intermedio5'         => $intermedio5,
+        'avanzado1'         => $avanzado1,
+        'avanzado2'         => $avanzado2,
+        'avanzado3'         => $avanzado3,
+        'avanzado4'         => $avanzado4,
+        'avanzado5'         => $avanzado5,
+
+      ];
+
+
+
+      // Actualizar base de datos
+      if (!alumnoModel::update(alumnoModel::$t2, ['usuarioid' => $id], $data)) {
+        throw new Exception(get_notificaciones(2));
+      }
+
+      $alumno = alumnoModel::by_idca($id);
+      
+
+      Redirect::back();
+
+  }
+
+
   function agregar()
   {
     if (!is_admin($this->rol)) {
@@ -74,9 +164,9 @@ class alumnosController extends Controller {
 
     $data = 
     [
-      'title'   => 'Agregar alumno',
+      'title'   => 'Agregar Estudiante',
       'slug'    => 'alumnos',
-      'button'  => ['url' => 'alumnos', 'text' => '<i class="fas fa-table"></i> Alumnos'],
+      'button'  => ['url' => 'alumnos', 'text' => '<i class="fas fa-table"></i> Estudiante'],
       'grupos'  => grupoModel::all()
     ];
 
@@ -94,7 +184,7 @@ class alumnosController extends Controller {
       if (!is_admin($this->rol)) {
         throw new Exception(get_notificaciones(1));
       }
-$numero = clean($_POST["numero"]);
+      $numero = clean($_POST["numero"]);
       $nombres       = clean($_POST["nombres"]);
       $apellidos     = clean($_POST["apellidos"]);
       $email         = clean($_POST["email"]);

@@ -14,7 +14,7 @@
                       <div class="col-lg-6">
                           <div class="p-5">
                               <div class="text-center">
-                                  <img src="<?php echo get_logo(); ?>" alt="<?php echo get_sitename(); ?>" class="img-fluid mb-3">
+                                  <img src="<?php echo IMAGES.'cle.jpeg' ?>" alt="<?php echo get_sitename(); ?>" class="img-fluid mb-3">
                                   <h1 class="h4 text-gray-900 mb-4"><?php echo sprintf('¡Bienvenido a %s!', get_sitename()); ?></h1>
                               </div>
                               <?php echo Flasher::flash(); ?>
@@ -45,10 +45,10 @@
                                   </a> -->
                               </form>
                               <hr>
-                              <div class="text-center">
+                             <!--  <div class="text-center">
                                   <a class="small" href="forgot-password.html">¿Olvidaste tu contraseña?</a>
                               </div>
-                             <!--<div class="text-center"> <a class="small" href="register.html">Crear cuenta!</a> </div>--> 
+                             <div class="text-center"> <a class="small" href="register.html">Crear cuenta!</a> </div>--> 
                           </div>
                       </div>
                   </div>
