@@ -1,16 +1,10 @@
 <?php
 
-/**
- * Plantilla general de modelos
- * Versión 1.0.1
- *
- * Modelo de profesor
- */
 class profesorModel extends Model {
   public static $t1   = 'usuarios'; 
   function __construct()
   {
-    // Constructor general
+    
   }
   
   static function all()

@@ -1,11 +1,11 @@
 <?php
 
-
 class grupoModel extends Model {
-  public static $t1 = 'grupos'; 
+  public static $t1 = 'grupos'; // Nombre de la tabla en la base de datos;
   public static $t2 = 'grupos_materias';
   public static $t3 = 'grupos_alumnos';
   
+
 
   function __construct()
   {
@@ -195,7 +195,7 @@ class grupoModel extends Model {
     $grupo = $rows[0];
     $grupo['materias'] = grupoModel::materias_asignadas($grupo['id']);
     
-    // Cargando compaÃ±eros
+    // Cargando compañeros
     $grupo['alumnos']  = grupoModel::alumnos_asignados($grupo['id']);
 
     return $grupo;
