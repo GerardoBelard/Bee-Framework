@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Plantilla general de controladores
- * Versión 1.0.2
- *
- * Controlador de dashboard
- */
 class dashboardController extends Controller {
   function __construct()
   {
@@ -27,7 +20,7 @@ class dashboardController extends Controller {
 
     if (is_admin($rol)) {
       
-     // $data['stats'] = adminModel::stats();
+      //$data['stats'] = adminModel::stats();
       //View::render('dashboard_admin', $data);
 
     } else if (is_profesor($rol)) {
