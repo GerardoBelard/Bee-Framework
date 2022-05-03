@@ -20,6 +20,10 @@ class materiasController extends Controller
   
     public function index()
     {
+        if (!is_admin(get_user_role())){
+            Flasher::new(get_notificaciones(), 'danger');
+            Redirect::to('dashboard');
+        }
         $data =
     [
       'title' => 'Todas Las Materias',
@@ -34,6 +38,10 @@ class materiasController extends Controller
 
     public function ver($id)
     {
+        if (!is_admin(get_user_role())){
+            Flasher::new(get_notificaciones(), 'danger');
+            Redirect::to('dashboard');
+        }
         if (!$materia = materiaModel::by_id($id)){
             Flasher::new('No existe la materia', 'danger');
             Redirect::to('materias');
@@ -49,9 +57,29 @@ class materiasController extends Controller
         View::render('ver', $data);
     }
     
+    function asignadas()
+  {
+    
+    
+
+    $id_profesor = get_user('id');
+    $data =
+    [
+      'title'    => 'Todos los niveles',
+      'slug'     => 'Niveles',
+      'materias' => materiaModel::materias_profesor($id_profesor)
+    ];
+
+    View::render('asignadas', $data);
+  }
+
 
     public function agregar()
     {
+        if (!is_admin(get_user_role())){
+            Flasher::new(get_notificaciones(), 'danger');
+            Redirect::to('dashboard');
+        }
         $data =
     [
       'title' => 'Agregar Materia',
@@ -62,6 +90,7 @@ class materiasController extends Controller
 
     public function post_agregar()
     {
+      
         try {
             if (!check_posted_data(['csrf', 'nombre', 'descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
                 throw new Exception(get_notificaciones());
