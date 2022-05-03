@@ -145,5 +145,47 @@
 	</div>
 </div>
 
+<!-- Content Row -->
+<div class="row">
+	<!-- Content Column -->
+	<div class="col-lg-6 mb-4">
+		<!-- Project Card Example -->
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">Proyectos</h6>
+			</div>
+			<div class="card-body">
+				<?php foreach (get_proyectos() as $p): ?>
+					<h4 class="small font-weight-bold"><?php echo $p['titulo']; ?>
+						<?php if ($p['progreso'] === 100): ?>
+							<span class="float-right">¡Completado!</span></h4>
+						<?php else: ?>
+							<span class="float-right"><?php echo sprintf('%s%%', $p['progreso']); ?></span>
+						<?php endif; ?>
+					</h4>
+					<div class="progress mb-4">
+						<div class="progress-bar <?php echo sprintf('bg-%s', $p['tipo']); ?>" 
+							role="progressbar" 
+							style="<?php echo sprintf('width: %s%%', $p['progreso']); ?>"
+							aria-valuenow="<?php echo $p['progreso']; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-6 mb-4">
+		<!-- Anuncios educativos -->
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">Anuncio Educativo</h6>
+			</div>
+			<div class="card-body">
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo consectetur, ipsum illo sapiente, vel dolor soluta quia eveniet voluptas, officia ea consequatur. Repellendus porro, cumque nam accusamus magnam cupiditate libero at sed earum excepturi, culpa, eius odio accusantium. Neque nisi totam magni iure optio placeat. Suscipit fugit iste qui iure?</p>
+				<p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores culpa doloremque consectetur ea assumenda molestias nostrum rerum alias fugit eum!.</p>
+			</div>
+		</div>
+	</div>
+</div>
 
 <?php require_once INCLUDES.'inc_footer.php'; ?>
