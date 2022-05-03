@@ -29,7 +29,7 @@
         <div class="card-header font-weight-bold text-primary">Video disponible</div>
         <div class="card-body p-0">
           <div class="yt_video_wrapper">
-            <iframe src="<?php echo $d->l->video; ?>" title="<?php echo $d->l->titutlo; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="<?php echo $d->l->video; ?>" title="<?php echo $d->l->titutlo; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
       </div>
