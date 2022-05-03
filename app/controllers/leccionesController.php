@@ -94,7 +94,7 @@ class leccionesController extends Controller {
   function post_agregar()
   {
     try {
-      if (!check_posted_data(['csrf','titulo','video','contenido','id_materia','id_profesor','fecha_max','fecha_inicial','status'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+      if (!check_posted_data(['csrf','titulo','video','contenido','id_materia','id_profesor','fecha_max','status'], $_POST) || !Csrf::validate($_POST['csrf'])) {
         throw new Exception(get_notificaciones());
       }
 
@@ -108,7 +108,7 @@ class leccionesController extends Controller {
       $contenido   = clean($_POST["contenido"], true);
       $id_profesor = clean($_POST["id_profesor"]);
       $id_materia  = clean($_POST["id_materia"]);
-      $fecha_ini   = clean($_POST["fecha_inicial"]);
+   
       $fecha_max   = clean($_POST["fecha_max"]);
       $status      = clean($_POST["status"]);
 
@@ -127,10 +127,7 @@ class leccionesController extends Controller {
         throw new Exception(sprintf('El profesor no tiene asignada la materia <b>%s</b>.', $materia['nombre']));
       }
 
-      // Validar el nombre del usuario
-      if (strlen($titulo) < 5) {
-        throw new Exception('Ingresa un título mayor a 5 caracteres.');
-      }
+      
 
       // Validar que el url del video
       if (!filter_var($video, FILTER_VALIDATE_URL) && !empty($video)) {
@@ -146,7 +143,6 @@ class leccionesController extends Controller {
         'video'            => $video,
         'contenido'        => $contenido,
         'status'           => $status,
-        'fecha_inicial'    => $fecha_ini,
         'fecha_disponible' => $fecha_max,
         'creado'           => now()
       ];
@@ -231,10 +227,7 @@ class leccionesController extends Controller {
       $fecha_max   = clean($_POST["fecha_max"]);
       $status      = clean($_POST["status"]);
 
-      // Validar el nombre del usuario
-      if (strlen($titulo) < 5) {
-        throw new Exception('Ingresa un título mayor a 5 caracteres.');
-      }
+     
 
       // Validar que el url del video
       if (!filter_var($video, FILTER_VALIDATE_URL) && !empty($video)) {
