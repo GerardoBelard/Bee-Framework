@@ -329,7 +329,7 @@ class gruposController extends Controller
     }
 
     if (!$materia = materiaModel::by_id($id)) {
-      Flasher::new('No existe la materia en la base de datos.', 'danger');
+      Flasher::new('No existe el nivel en la base de datos.', 'danger');
       Redirect::to('materias');
     }
 
@@ -341,7 +341,7 @@ class gruposController extends Controller
       'materia'   => $materia,
       'lecciones' => leccionModel::by_materia_profesor($id, $this->id)
     ];
-
+  
     View::render('materia', $data);
   }
 }
