@@ -138,3 +138,101 @@ function mail_confirmar_cuenta($id_usuario)
 
   return true;
 }
+
+/**
+ * Regresa los estados disponibles para una lección
+ *
+ * @return array
+ */
+function get_estados_lecciones()
+{
+  return
+  [
+    ['borrador', 'Borrador'],
+    ['publica' , 'Publicada']
+  ];
+}
+
+function format_estado_leccion($status)
+{
+  $placeholder = '<div class="badge %s"><i class="%s"></i> %s</div>';
+  $classes     = '';
+  $icon        = '';
+  $text        = '';
+
+  switch ($status) {
+    case 'borrador':
+      $classes = 'badge-info';
+      $icon    = 'fas fa-eraser';
+      $text    = 'Borrador';
+      break;
+
+    case 'publica':
+      $classes = 'badge-success';
+      $icon    = 'fas fa-check';
+      $text    = 'Publicada';
+      break;
+
+    default:
+      $classes = 'badge-danger';
+      $icon    = 'fas fa-question';
+      $text    = 'Desconocido';
+      break;
+  }
+
+  return sprintf($placeholder, $classes, $icon, $text);
+}
+
+function format_tiempo_restante($fecha)
+{
+  $output   = '';
+  $segundos = strtotime($fecha) - time();
+  $segundos = $segundos < 0 ? 0 : $segundos;
+  $minutos  = $segundos / 60;
+  $horas    = $minutos / 60;
+  $dias     = $horas / 24;
+  $semanas  = $dias / 7;
+  $meses    = $semanas / 4;
+  $anos     = $meses / 12;
+
+  switch (true) {
+    case $anos >= 1:
+      $anos   = floor($anos);
+      $output = sprintf('%s %s', $anos, $anos === 1 ? 'año restante.' : 'años restantes.');
+      break;
+
+    case $meses >= 2:
+      $output = sprintf('%s meses restantes.', floor($meses));
+      break;
+
+    case $semanas >= 2:
+      $output = sprintf('%s semanas restantes.', floor($semanas));
+      break;
+
+    case $dias >= 3:
+      $output = sprintf('%s días restantes.', floor($dias));
+      break;
+
+    case $horas >= 2:
+      $output = sprintf('%s horas restantes.', floor($horas));
+      break;
+
+    case $minutos >= 2:
+      $output = sprintf('%s minutos restantes.', floor($minutos));
+      break;
+
+    case $segundos > 0:
+      $output = sprintf('%s segundos restantes.', $segundos);
+      break;
+    
+    case $segundos === 0:
+      $output = 'El tiempo de ha terminado.';
+      break;
+
+    default:
+      $output = 'Desconocido.';
+      break;
+  }
+
+  return $output;
+}
