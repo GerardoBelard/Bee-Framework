@@ -7,6 +7,7 @@ class dashboardController extends Controller {
       Flasher::new('Debes iniciar sesión primero.', 'danger');
       Redirect::to('login');
     }
+    
   }
   
   function index()

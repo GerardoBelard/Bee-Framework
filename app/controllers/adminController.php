@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Plantilla general de controladores
- * Versión 1.0.2
- *
- * Controlador de admin
- */
 class adminController extends Controller {
   private $id  = null;
   private $rol = null;
@@ -25,6 +19,7 @@ class adminController extends Controller {
       Flasher::new(get_notificaciones(), 'danger');
       Redirect::back();
     }
+    logger('Borrando o actualizando bdd');
   }
   
   function index()

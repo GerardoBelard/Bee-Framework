@@ -74,32 +74,7 @@
 <!-- Content Row -->
 <div class="row">
 	<!-- Ingresos -->
-	<div class="col-xl-8 col-lg-7">
-		<div class="card shadow mb-4">
-			<!-- Card Header - Dropdown -->
-			<div
-				class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-				<h6 class="m-0 font-weight-bold text-primary">Resumen de Ingresos</h6>
-				<div class="dropdown no-arrow">
-					<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-					</a>
-					<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-						aria-labelledby="dropdownMenuLink">
-						<div class="dropdown-header">Acciones</div>
-						<a class="dropdown-item recargar_resumen_ingresos_chart" href="#"><i class="fas fa-sync fa-fw"></i> Recargar</a>
-					</div>
-				</div>
-			</div>
-			<!-- Card Body -->
-			<div class="card-body">
-				<div class="chart-area">
-					<canvas id="resumen_ingresos_chart"></canvas>
-				</div>
-			</div>
-		</div>
-	</div>
+
 
 	<!-- Roles -->
 	<div class="col-xl-4 col-lg-5">
@@ -118,7 +93,7 @@
 	</div>
 
   <!-- Lecciones registradas por mes -->
-	<div class="col-xl-12 col-lg-12">
+  <div class="col-xl-8 col-lg-7">
 		<div class="card shadow mb-4">
 			<!-- Card Header - Dropdown -->
 			<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -145,47 +120,5 @@
 	</div>
 </div>
 
-<!-- Content Row -->
-<div class="row">
-	<!-- Content Column -->
-	<div class="col-lg-6 mb-4">
-		<!-- Project Card Example -->
-		<div class="card shadow mb-4">
-			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">Proyectos</h6>
-			</div>
-			<div class="card-body">
-				<?php foreach (get_proyectos() as $p): ?>
-					<h4 class="small font-weight-bold"><?php echo $p['titulo']; ?>
-						<?php if ($p['progreso'] === 100): ?>
-							<span class="float-right">¡Completado!</span></h4>
-						<?php else: ?>
-							<span class="float-right"><?php echo sprintf('%s%%', $p['progreso']); ?></span>
-						<?php endif; ?>
-					</h4>
-					<div class="progress mb-4">
-						<div class="progress-bar <?php echo sprintf('bg-%s', $p['tipo']); ?>" 
-							role="progressbar" 
-							style="<?php echo sprintf('width: %s%%', $p['progreso']); ?>"
-							aria-valuenow="<?php echo $p['progreso']; ?>" aria-valuemin="0" aria-valuemax="100"></div>
-					</div>
-				<?php endforeach; ?>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-lg-6 mb-4">
-		<!-- Anuncios educativos -->
-		<div class="card shadow mb-4">
-			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">Anuncio Educativo</h6>
-			</div>
-			<div class="card-body">
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo consectetur, ipsum illo sapiente, vel dolor soluta quia eveniet voluptas, officia ea consequatur. Repellendus porro, cumque nam accusamus magnam cupiditate libero at sed earum excepturi, culpa, eius odio accusantium. Neque nisi totam magni iure optio placeat. Suscipit fugit iste qui iure?</p>
-				<p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores culpa doloremque consectetur ea assumenda molestias nostrum rerum alias fugit eum!.</p>
-			</div>
-		</div>
-	</div>
-</div>
 
 <?php require_once INCLUDES.'inc_footer.php'; ?>

@@ -1306,38 +1306,38 @@ $(document).ready(function() {
     draw_resumen_enseñanza_chart(chart);
   }
 
-  // Reiniciar el sistema
-  $('#reiniciar_sistema_form').on('submit', reiniciar_sistema);
-  function reiniciar_sistema(e) {
-    e.preventDefault();
+// Reiniciar el sistema
+$('#reiniciar_sistema_form').on('submit', reiniciar_sistema);
+function reiniciar_sistema(e) {
+  e.preventDefault();
 
-    var form    = $(this),
-    button      = $('button', form),
-    data        = new FormData(form.get(0));
+  var form    = $(this),
+  button      = $('button', form),
+  data        = new FormData(form.get(0));
 
-    if(!confirm('¿Estás seguro?')) return false;
+  if(!confirm('¡¿Estás seguro?!')) return false;
 
-    $.ajax({
-      url: 'ajax/reiniciar_sistema',
-      type: 'post',
-      dataType: 'json',
-      processData: false,
-      contentType: false,
-      cache: false,
-      data: data,
-      beforeSend: function() {
-        button.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        toastr.success(res.msg, '¡Bien!');
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
-      button.waitMe('hide');
-    })
-  }
+  $.ajax({
+    url: 'ajax/reiniciar_sistema',
+    type: 'post',
+    dataType: 'json',
+    processData: false,
+    contentType: false,
+    cache: false,
+    data: data,
+    beforeSend: function() {
+      button.waitMe();
+    }
+  }).done(function(res) {
+    if(res.status === 200) {
+      toastr.success(res.msg, '¡Bien!');
+    } else {
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err) {
+    toastr.error('Hubo un error en la petición', '¡Upss!');
+  }).always(function() {
+    button.waitMe('hide');
+  })
+}
 });
