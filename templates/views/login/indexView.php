@@ -45,11 +45,10 @@
                                   </a> -->
                               </form>
                               <hr>
-                             <!--  <div class="text-center">
-                                  <a class="small" href="forgot-password.html">¿Olvidaste tu contraseña?</a>
+                               <div class="text-center">
+                                  <a class="small" href="login/recuperacion">¿Olvidaste tu contraseña?</a>
                               </div>
-                             <div class="text-center"> <a class="small" href="register.html">Crear cuenta!</a> </div>--> 
-                          </div>
+                           
                       </div>
                   </div>
               </div>

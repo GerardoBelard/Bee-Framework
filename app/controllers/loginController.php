@@ -5,7 +5,7 @@ class loginController extends Controller {
   {
     if (Auth::validate()) {
       Flasher::new('Ya hay una sesión abierta.');
-      Redirect::to('home/dashboard');
+      Redirect::to('home/flash');
     }
   }
 
@@ -45,7 +45,7 @@ class loginController extends Controller {
       }
 
       // Se envía el email de cambio de contraseña
-     // mail_recuperacion_contrasena($user['id']);
+      mail_recuperacion_contrasena($user['id']);
 
       Flasher::new(sprintf('Hemos enviado un correo electrónico a <b>%s</b> para actualizar tu contraseña.', $email), 'success');
       Redirect::back();
@@ -88,10 +88,10 @@ class loginController extends Controller {
       }
 
       // Validar el status del usuario
-    //  if ($user['status'] === 'pendiente') {
-      //  mail_confirmar_cuenta($user['id']);
-        //throw new Exception('Confirma tu dirección de correo electrónico.');
-  //    }
+      if ($user['status'] === 'pendiente') {
+        mail_confirmar_cuenta($user['id']);
+        throw new Exception('Confirma tu dirección de correo electrónico.');
+      }
   
       // Loggear al usuario
       Auth::login($user['id'], $user);
@@ -185,5 +185,65 @@ class loginController extends Controller {
     View::render('password', $data);
   }
 
- 
+  function post_password()
+  {
+    try {
+      if (!check_posted_data(['csrf','password','conf_password','id','token'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+        throw new Exception(get_notificaciones());
+      }
+  
+      // Data pasada del formulario
+      $id            = clean($_POST["id"]);
+      $token         = clean($_POST["token"]);
+      $password      = clean($_POST["password"]);
+      $conf_password = clean($_POST["conf_password"]);
+
+      // Validar que exista dicho token en la base de datos
+      $sql = 
+      'SELECT u.*,
+      p.id AS id_post
+      FROM usuarios u 
+      JOIN posts p ON p.id_usuario = u.id AND p.tipo = "token_recuperacion"
+      WHERE u.id = :id AND p.contenido = :token';
+      if (!$posts = usuarioModel::query($sql, ['id' => $id, 'token' => $token])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $post = $posts[0];
+
+      
+
+      if ($password !== $conf_password) {
+        throw new Exception('Las contraseñas no coinciden.');
+      }
+
+      $data =
+      [
+        'password' => password_hash($password.AUTH_SALT, PASSWORD_BCRYPT)
+      ];
+
+      // Se actualiza el registro
+      if (!usuarioModel::update(usuarioModel::$t1, ['id' => $id], $data)) {
+        throw new Exception(get_notificaciones(3));
+      }
+
+      // Se envía el email de cambio de contraseña
+      $usuario = usuarioModel::by_id($id);
+      $body    = sprintf('Tu contraseña ha sido actualizada con éxito, si tú no realizaste esta acción, comúnicate con administración de %s.', get_sitename());
+      send_email(get_siteemail(), $usuario['email'], 'Tu contraseña ha sido actualizada', $body, 'Se han realizado cambios en tu contraseña.');
+
+      // Borramos el registro del token / post
+      postModel::remove(postModel::$t1, ['id' => $post['id_post']]);
+
+      Flasher::new('Tu contraseña ha sido actualizada con éxito.', 'success');
+      Redirect::to('login');
+
+    } catch (Exception $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    } catch (PDOException $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    }
+  }
 }
