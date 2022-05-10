@@ -268,7 +268,10 @@ class ajaxController extends Controller {
     // se guardó con éxito
     json_output(json_build(200, null, 'Opciones actualizadas con éxito'));
   }
-  
+  ///////////////////////////////////////////////////////
+  /////////////// TERMINA PROYECTO DEMO /////////////////
+  ///////////////////////////////////////////////////////
+
   // Profesores
   function get_materias_disponibles_profesor()
   {
@@ -390,6 +393,7 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
   // Grupos
   function get_materias_disponibles_grupo()
   {
@@ -411,6 +415,7 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
   function get_materias_grupo()
   {
     try {
@@ -532,6 +537,7 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
   function quitar_alumno_grupo()
   {
     try {
@@ -539,7 +545,7 @@ class ajaxController extends Controller {
         throw new Exception(get_notificaciones());
       }
 
-      $id_grupo = clean($_POST["id_grupo"]);
+      $id_grupo  = clean($_POST["id_grupo"]);
       $id_alumno = clean($_POST["id_alumno"]);
 
       if (!$grupo = grupoModel::by_id($id_grupo)) {
@@ -570,7 +576,7 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
-  
+
   function suspender_alumno()
   {
     try {
@@ -597,6 +603,8 @@ class ajaxController extends Controller {
         throw new Exception(get_notificaciones(4));
       }
 
+      // Email de suspensión
+     // mail_suspension_cuenta($id_alumno);
 
       $msg = sprintf('El alumno <b>%s</b> ha sido suspendido con éxito.', $alumno['nombre_completo']);
 
@@ -608,6 +616,7 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
   function remover_suspension_alumno()
   {
     try {
@@ -634,6 +643,8 @@ class ajaxController extends Controller {
         throw new Exception(get_notificaciones(4));
       }
 
+      // Email de remover suspensión
+     // mail_retirar_suspension_cuenta($id_alumno);
 
       $msg    = sprintf('Se ha retirado la suspensión del alumno <b>%s</b> con éxito.', $alumno['nombre_completo']);
       $alumno = alumnoModel::by_id($id_alumno);
@@ -646,7 +657,6 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
-
 
   function get_resumen_ingresos()
   {
@@ -746,5 +756,57 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
-  
+
+  function reiniciar_sistema()
+  {
+    try {
+      if (!is_admin(get_user_role())) {
+        throw new Exception(get_notificaciones(1));
+      }
+
+      // id del usuario actual
+      $id     = get_user('id');
+      $nombre = get_user('nombre_completo');
+
+      // Reiniciar tabla materias
+      $sql = 'TRUNCATE TABLE materias';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla materias_profesores
+      $sql = 'TRUNCATE TABLE materias_profesores';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla grupos
+      $sql = 'TRUNCATE TABLE grupos';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla grupos_alumnos
+      $sql = 'TRUNCATE TABLE grupos_alumnos';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla grupos_materias
+      $sql = 'TRUNCATE TABLE grupos_materias';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla lecciones
+      $sql = 'TRUNCATE TABLE lecciones';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla posts
+      $sql = 'TRUNCATE TABLE posts';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla usuarios
+      $sql = 'DELETE u FROM usuarios u WHERE u.id != :id_usuario OR u.rol NOT IN("admin","root")';
+      Model::query($sql, ['id_usuario' => $id]);
+
+      logger(sprintf('Sistema reiniciado por %s con éxito.', $nombre));
+      json_output(json_build(200, null, 'Sistema reiniciado con éxito.'));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
   }
+}

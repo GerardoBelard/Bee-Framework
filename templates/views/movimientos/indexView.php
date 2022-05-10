@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="py-5 text-center">
-    <img class="d-block mx-auto mb-4" src="<?php echo IMAGES.'bee_logo.png' ?>" alt="<?php echo get_sitename() ?>" width="150">
+    <img class="d-block mx-auto mb-4" src="<?php echo IMAGES.'' ?>" alt="<?php echo get_sitename() ?>" width="150">
     <h2>Administra tus finanzas</h2>
     <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam, ullam.</p>
   </div>

@@ -1,8 +1,11 @@
 $(document).ready(function() {
 
-  
-  console.log('Cle');
-  console.log('https://gamadero.tecnm.mx/')
+  // Toast para notificaciones
+  //toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!');
+
+  // Waitme
+  //$('body').waitMe({effect : 'orbit'});
+
 
   /**
    * Prueba de peticiones ajax al backend en versión 1.1.3
@@ -998,7 +1001,6 @@ $(document).ready(function() {
 
   // Dibujar gráfica de resumen de ingresos
   function draw_resumen_ingresos_chart(element) {
-    console.log(element);
     var wrapper = element.parent('div'),
     _t          = Bee.csrf,
     action      = 'get',
