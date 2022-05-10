@@ -646,5 +646,7 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
+
   
   }

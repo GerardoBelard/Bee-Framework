@@ -26,6 +26,8 @@ class gruposController extends Controller
             Flasher::new(get_notificaciones(), 'danger');
             Redirect::back();
         }
+
+        
     
         $data =
     [
@@ -344,6 +346,28 @@ class gruposController extends Controller
   
     View::render('materia', $data);
   }
+
+  
+  function ver_calificacionesgpo($id)
+  {
+    
+    
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['usuarioid']),
+      'slug'   => 'grupos',
+      'button' => ['url' => 'grupos/asignados', 'text' => '<i class="fas fa-table"></i> Grupos'],
+      'a'      => $alumno
+    ];
+
+    View::render('ver_calificacionesgpo', $data);
+  }
+
 }
  
 

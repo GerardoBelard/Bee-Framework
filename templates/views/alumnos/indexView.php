@@ -29,12 +29,14 @@
 									<div class="btn-group">
 										<a href="<?php echo 'alumnos/ver/'.$a->id; ?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
 										<a href="<?php echo 'alumnos/ver_calificaciones/'.$a->id; ?>" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>
+
                     <?php if ($a->status === 'suspendido'): ?>
                       <button class="btn btn-warning text-dark btn-sm remover_suspension_alumno" data-view="alumnos" data-id="<?php echo $a->id; ?>"><i class="fas fa-undo"></i></button>
                     <?php else: ?>
                       <button class="btn btn-danger btn-sm suspender_alumno" data-view="alumnos" data-id="<?php echo $a->id; ?>"><i class="fas fa-ban"></i></button>
                     <?php endif; ?>
 										<a href="<?php echo buildURL('alumnos/borrar/'.$a->id); ?>" class="btn btn-sm btn-danger confirmar"><i class="fas fa-trash"></i></a>
+
 									</div>
 								</td>
 							</tr>

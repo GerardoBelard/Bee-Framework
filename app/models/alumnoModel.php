@@ -43,7 +43,7 @@ class alumnoModel extends Model {
     // Un registro con $id
     $sql = 'SELECT 
     u.*,
-    ga.id
+    ga.id, ga.numero, ga.nombre_completo
     FROM calificaciones u
     LEFT JOIN usuarios ga ON ga.id= u.usuarioid
     WHERE u.usuarioid = :id AND ga.rol = "alumno" 
@@ -72,5 +72,12 @@ class alumnoModel extends Model {
     JOIN grupos_alumnos ga ON ga.id_alumno = u.id 
     WHERE u.id = :id AND u.rol = "alumno"';
     return (parent::query($sql, ['id' => $id])) ? true : false;
+  }
+
+  static function alta_califi($id)
+  {
+    // Un registro con $id
+    $sql = 'INSERT INTO calificaciones (usuarioid) VALUES (:id)';
+    return ($rows = parent::query($sql, ['id' => $id]));
   }
 }

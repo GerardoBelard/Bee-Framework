@@ -20,9 +20,9 @@ class alumnoController extends Controller {
 
     $this->rol = get_user_role();
 
-    if (is_admin($this->rol)) {
-      Redirect::to('alumnos');
-    }
+    // if (is_admin($this->rol)) {
+    //   Redirect::to('alumnos');
+    // }
 
     if (!is_alumno($this->rol)) {
       Flasher::new(get_notificaciones(), 'danger');
@@ -127,4 +127,302 @@ class alumnoController extends Controller {
 
     View::render('grupo', $data);
   }
+
+  function calificaciones($id)
+  {
+    
+    
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('calificaciones', $data);
+  }
+  function boleta($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta', $data);
+  }
+
+  function boleta2($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta2', $data);
+  }
+
+  function boleta3($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta3', $data);
+  }
+
+  function boleta4($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta4', $data);
+  }
+
+  function boleta5($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta5', $data);
+  }
+
+  function boleta6($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta6', $data);
+  }
+
+  function boleta7($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta7', $data);
+  }
+
+  
+  function boleta8($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta8', $data);
+  }
+
+
+  function boleta9($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta9', $data);
+  }
+
+  
+  function boleta10($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta10', $data);
+  }
+
+  
+  function boleta11($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta11', $data);
+  }
+
+  
+  function boleta12($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta12', $data);
+  }
+
+  
+  function boleta13($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta13', $data);
+  }
+
+  
+  function boleta14($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta14', $data);
+  }
+
+  
+  function boleta15($id){
+        
+    if (!$alumno = alumnoModel::by_idca($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumno',
+      'button' => ['url' => 'alumno', 'text' => '<i class="fas fa-table"></i> Alumno'],
+      'a'      => $alumno
+    ];
+
+    View::render('boleta15', $data);
+  }
+
 }

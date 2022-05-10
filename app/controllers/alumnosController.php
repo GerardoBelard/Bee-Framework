@@ -74,8 +74,9 @@ class alumnosController extends Controller {
     }
     
     if (!$alumno = alumnoModel::by_idca($id)) {
-      Flasher::new('No existe el alumno en la base de datos.', 'danger');
-      Redirect::back();
+      Flasher::new('La boleta del alumno ha sido dada de alta con exito.', 'success');
+      alumnoModel::alta_califi($id);
+      Redirect::to('alumnos');
     }
 
     $data =
@@ -241,6 +242,7 @@ class alumnosController extends Controller {
         throw new Exception(get_notificaciones(2));
       }
 
+
       $data2['id_alumno'] = $id;
 
       // Insertar a la base de datos
@@ -249,7 +251,7 @@ class alumnosController extends Controller {
       }
 
       // Email de confirmación de correo
-      mail_confirmar_cuenta($id);
+      // mail_confirmar_cuenta($id);
 
       $alumno = alumnoModel::by_id($id);
       $grupo  = grupoModel::by_id($id_grupo);
@@ -421,4 +423,5 @@ class alumnosController extends Controller {
       Redirect::back();
     }
   }
+
 }

@@ -62,7 +62,14 @@
               <?php foreach ($d->g->alumnos as $a): ?>
                 <li class="list-group-item">
                   <div class="btn-group float-right">
-                    <a class="btn btn-success btn-sm" href="<?php echo sprintf('mailto:%s?subject=[%s] - Mensaje de %s para %s', $a->email, get_sitename(), get_user('nombre_completo'), $a->nombre_completo); ?>"><i class="fas fa-envelope"></i></a>
+                    <?php if ($a->status === 'suspendido'): ?>
+                      <a class="btn btn-success btn-sm" href="<?php echo sprintf('mailto:%s?subject=[%s] - Mensaje de %s para %s', $a->email, get_sitename(), get_user('nombre_completo'), $a->nombre_completo); ?>"><i class="fas fa-envelope"></i></a>
+                    <?php elseif ($a->status === 'pendiente'): ?>
+                      <a class="btn btn-success btn-sm" href="<?php echo sprintf('mailto:%s?subject=[%s] - Mensaje de %s para %s', $a->email, get_sitename(), get_user('nombre_completo'), $a->nombre_completo); ?>"><i class="fas fa-envelope"></i></a>
+                    <?php else: ?>
+                      <a class="btn btn-info btn-sm" href="<?php echo 'grupos/ver_calificacionesgpo/'.$a->id; ?>"><i class="fas fa-pencil-alt"></i></a>
+                      <a class="btn btn-success btn-sm" href="<?php echo sprintf('mailto:%s?subject=[%s] - Mensaje de %s para %s', $a->email, get_sitename(), get_user('nombre_completo'), $a->nombre_completo); ?>"><i class="fas fa-envelope"></i></a>
+                    <?php endif; ?>  
                   </div>
                   <b><?php echo $a->nombre_completo; ?></b>
                   <br>

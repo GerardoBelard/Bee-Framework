@@ -63,4 +63,3 @@
 
 
 <?php require_once INCLUDES.'inc_footer_minimal.php'; ?>
-

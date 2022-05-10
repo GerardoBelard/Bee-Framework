@@ -63,6 +63,7 @@
                 <?php if ($a->id == get_user('id')): ?>
                   <li class="list-group-item">
                     <b><?php echo sprintf('%s (Tú)', $a->nombre_completo); ?></b>
+                    <a class="btn btn-info btn-sm" href="<?php echo 'alumno/calificaciones/'.$a->id; ?>"><i class="fas fa-pencil-alt"></i></a>
                   </li>
                 <?php else: ?>
                   <li class="list-group-item">
