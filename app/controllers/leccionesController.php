@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Plantilla general de controladores
- * Versión 1.0.2
- *
- * Controlador de lecciones
- */
 class leccionesController extends Controller {
   private $id  = null;
   private $rol = null;
@@ -216,7 +210,7 @@ class leccionesController extends Controller {
       $id_profesor = $this->id;
       
       // Validar el id del profesor y del registro
-      if ($leccion['id_profesor'] !== $id_profesor && !is_admin($this->rol)) {
+      if ($leccion['id_profesor'] !== $this->id && !is_admin($this->rol)) {
         throw new Exception(get_notificaciones());
       }
 
@@ -280,7 +274,7 @@ class leccionesController extends Controller {
       $id_profesor = $this->id;
       
       // Validar el id del profesor y del registro
-      if ($leccion['id_profesor'] !== $id_profesor && !is_admin($this->rol)) {
+      if ($leccion['id_profesor'] !== $this->id && !is_admin($this->id)) {
         throw new Exception(get_notificaciones());
       }
 

@@ -20,9 +20,9 @@ class alumnoController extends Controller {
 
     $this->rol = get_user_role();
 
-    // if (is_admin($this->rol)) {
-    //   Redirect::to('alumnos');
-    // }
+     if (is_admin($this->rol)) {
+      Redirect::to('alumnos');
+     }
 
     if (!is_alumno($this->rol)) {
       Flasher::new(get_notificaciones(), 'danger');
@@ -47,7 +47,7 @@ class alumnoController extends Controller {
     [
       'title'     => 'Todas mis lecciones',
       'slug'      => 'alumno-lecciones',
-      'lecciones' => leccionModel::by_alumno($this->id_alumno, $publicadas, $id_materia, $id_profesor)
+      'lecciones' => leccionModel::by_alumno($this->id, $publicadas, $id_materia, $id_profesor)
     ];
 
     View::render('lecciones', $data);
@@ -77,7 +77,7 @@ class alumnoController extends Controller {
       u.id = :id_usuario
     AND l.id = :id_leccion LIMIT 1';
 
-    if (!leccionModel::query($sql, ['id_usuario' => $this->id_alumno, 'id_leccion' => $id_leccion])) {
+    if (!leccionModel::query($sql, ['id_usuario' => $this->id, 'id_leccion' => $id_leccion])) {
       Flasher::new(get_notificaciones(), 'danger');
       Redirect::to('alumno/lecciones');
     }
@@ -113,7 +113,7 @@ class alumnoController extends Controller {
 
   function grupo()
   {
-    if (!$grupo = grupoModel::by_alumno($this->id_alumno)) {
+    if (!$grupo = grupoModel::by_alumno($this->id)) {
       Flasher::new('El grupo no existe en la base de datos.', 'danger');
       Redirect::back();
     }
