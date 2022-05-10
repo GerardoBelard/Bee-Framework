@@ -1,6 +1,17 @@
 <?php
+
+/**
+ * Plantilla general de modelos
+ * VersiÃ³n 1.0.1
+ *
+ * Modelo de leccion
+ */
 class leccionModel extends Model {
-  public static $t1   = 'lecciones';
+  public static $t1   = 'lecciones'; // Nombre de la tabla en la base de datos;
+  
+  // Nombre de tabla 2 que talvez tenga conexiÃ³n con registros
+  //public static $t2 = '__tabla 2___'; 
+  //public static $t3 = '__tabla 3___'; 
 
   function __construct()
   {

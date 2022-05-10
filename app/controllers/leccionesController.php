@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Plantilla general de controladores
+ * Versión 1.0.2
+ *
+ * Controlador de lecciones
+ */
 class leccionesController extends Controller {
   private $id  = null;
   private $rol = null;
@@ -79,7 +85,7 @@ class leccionesController extends Controller {
       'id_profesor'       => $this->id,
       'id_materia'        => isset($_GET["id_materia"]) ? $_GET["id_materia"] : null,
       'materias_profesor' => materiaModel::materias_profesor($this->id),
-      'button'            => ['url' => 'materias/asignadas', 'text' => '<i class="fas fa-undo"></i> Mis niveles'],
+      'button'            => ['url' => 'materias/asignadas', 'text' => '<i class="fas fa-undo"></i> Mis materias'],
     ];
 
     View::render('agregar', $data);
@@ -102,7 +108,7 @@ class leccionesController extends Controller {
       $contenido   = clean($_POST["contenido"], true);
       $id_profesor = clean($_POST["id_profesor"]);
       $id_materia  = clean($_POST["id_materia"]);
-      $fecha_ini = clean($_POST["fecha_inicial"]);
+      $fecha_ini   = clean($_POST["fecha_inicial"]);
       $fecha_max   = clean($_POST["fecha_max"]);
       $status      = clean($_POST["status"]);
 
@@ -121,7 +127,6 @@ class leccionesController extends Controller {
         throw new Exception(sprintf('El profesor no tiene asignada la materia <b>%s</b>.', $materia['nombre']));
       }
 
-      
 
       // Validar que el url del video
       if (!filter_var($video, FILTER_VALIDATE_URL) && !empty($video)) {
@@ -137,7 +142,7 @@ class leccionesController extends Controller {
         'video'            => $video,
         'contenido'        => $contenido,
         'status'           => $status,
-        'fecha_inicial' => $fecha_ini,
+        'fecha_inicial'    => $fecha_ini,
         'fecha_disponible' => $fecha_max,
         'creado'           => now()
       ];
@@ -218,11 +223,10 @@ class leccionesController extends Controller {
       $titulo      = clean($_POST["titulo"]);
       $video       = clean($_POST["video"]);
       $contenido   = clean($_POST["contenido"], true);
-     $fecha_ini   = clean($_POST["fecha_inicial"]);
+      $fecha_ini   = clean($_POST["fecha_inicial"]);
       $fecha_max   = clean($_POST["fecha_max"]);
       $status      = clean($_POST["status"]);
 
-     
 
       // Validar que el url del video
       if (!filter_var($video, FILTER_VALIDATE_URL) && !empty($video)) {
@@ -236,7 +240,7 @@ class leccionesController extends Controller {
         'video'            => $video,
         'contenido'        => $contenido,
         'status'           => $status,
-       'fecha_inicial'    => $fecha_ini,
+        'fecha_inicial'    => $fecha_ini,
         'fecha_disponible' => $fecha_max
       ];
 
