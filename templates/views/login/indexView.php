@@ -4,17 +4,16 @@
   <!-- Outer Row -->
   <div class="row justify-content-center">
 
-      <div class="col-xl-10 col-lg-12 col-md-9">
+      <div class="col-xl-8 col-lg-8 col-md-8">
 
           <div class="card o-hidden border-0 shadow-lg my-5">
               <div class="card-body p-0">
                   <!-- Nested Row within Card Body -->
-                  <div class="row">
-                      <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                      <div class="col-lg-6">
+                
+                    
                           <div class="p-5">
                               <div class="text-center">
-                                  <img src="<?php echo IMAGES.'cle.jpeg' ?>" alt="<?php echo get_sitename(); ?>" class="img-fluid mb-3">
+                                  <img src="<?php echo IMAGES.'cle.jpeg' ?>" alt="<?php echo get_sitename(); ?>" width="400px" class="img-fluid mb-3">
                                   <h1 class="h4 text-gray-900 mb-4"><?php echo sprintf('¡Bienvenido a %s!', get_sitename()); ?></h1>
                               </div>
                               <?php echo Flasher::flash(); ?>

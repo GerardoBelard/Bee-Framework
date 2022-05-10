@@ -7,12 +7,11 @@
       <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
           <!-- Nested Row within Card Body -->
-          <div class="row">
-            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-            <div class="col-lg-6">
+        
+         
               <div class="p-5">
                 <div class="text-center">
-                  <img src="<?php echo get_logo(); ?>" alt="<?php echo get_sitename(); ?>" class="img-fluid mb-3">
+                <img src="<?php echo IMAGES.'cle.jpeg' ?>" alt="<?php echo get_sitename(); ?>" width="400px" class="img-fluid mb-3">
                   <h1 class="h4 text-gray-900 mb-4"><?php echo $d->title; ?></h1>
                 </div>
 
