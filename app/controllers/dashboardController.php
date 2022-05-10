@@ -11,6 +11,8 @@ class dashboardController extends Controller {
   
   function index()
   {
+
+
     $rol  = get_user_role();
     $data = 
     [
@@ -20,7 +22,7 @@ class dashboardController extends Controller {
 
     if (is_admin($rol)) {
       
-      //$data['stats'] = adminModel::stats();
+      $data['stats'] = adminModel::stats();
       View::render('dashboard_admin', $data);
 
     } else if (is_profesor($rol)) {

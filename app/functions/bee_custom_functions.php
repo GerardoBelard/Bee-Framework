@@ -236,3 +236,54 @@ function format_tiempo_restante($fecha)
 
   return $output;
 }
+
+function get_ingresos()
+{
+  return
+  [
+    ['Enero'     , 23848],
+    ['Febrero'   , 85633],
+    ['Marzo'     , 54200],
+    ['Abril'     , 61250],
+    ['Mayo'      , 12577],
+    ['Junio'     , 25966],
+    ['Julio'     , 34700],
+    ['Agosto'    , 75000],
+    ['Septiembre', 23848],
+    ['Octubre'   , 16450],
+    ['Noviembre' , 63250],
+    ['Diciembre' , 83500]
+  ];
+}
+
+function get_proyectos()
+{
+  return
+  [
+    [
+      'titulo'   => 'Programa escolar 2021',
+      'tipo'     => 'danger',
+      'progreso' => 20
+    ],
+    [
+      'titulo'   => 'Registro de nuevos alumnos',
+      'tipo'     => 'warning',
+      'progreso' => 40
+    ],
+    [
+      'titulo'   => 'Registro de profesores',
+      'tipo'     => 'primary',
+      'progreso' => 60
+    ],
+    [
+      'titulo'   => 'Capacitación de personal',
+      'tipo'     => 'info',
+      'progreso' => 80
+    ],
+    [
+      'titulo'   => 'Crear un sistema escolar',
+      'tipo'     => 'success',
+      'progreso' => 100
+    ]
+  ];
+}
