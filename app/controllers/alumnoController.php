@@ -18,16 +18,16 @@ class alumnoController extends Controller {
       Redirect::to('login');
     }
 
-    $this->rol = get_user_role();
+    // $this->rol = get_user_role();
 
-     if (is_admin($this->rol)) {
-      Redirect::to('alumnos');
-     }
+    //  if (is_admin($this->rol)) {
+    //   Redirect::to('alumnos');
+    //  }
 
-    if (!is_alumno($this->rol)) {
-      Flasher::new(get_notificaciones(), 'danger');
-      Redirect::back();
-    }
+    // if (!is_alumno($this->rol)) {
+    //   Flasher::new(get_notificaciones(), 'danger');
+    //   Redirect::back();
+    // }
 
     // Inicializamos los valores de nuestras propiedades
     $this->id_alumno = get_user('id');

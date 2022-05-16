@@ -27,7 +27,7 @@
                 <div class="form-group">
                   <label for="basico1">Basico 1</label>
                   <br>
-                  <?php if($d->a->basico1 < 80): ?>
+                  <?php if($d->a->basico1 == 0): ?>
                   <label class="cali" ><?php echo $d->a->basico1; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -40,7 +40,7 @@
                 <div class="form-group">
                   <label for="basico2">Basico 2</label>
                   <br>
-                  <?php if($d->a->basico2 < 80): ?>
+                  <?php if($d->a->basico2 == 0): ?>
                   <label class="cali" ><?php echo $d->a->basico2; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -52,7 +52,7 @@
                 <div class="form-group">
                   <label for="basico3">Basico 3</label>
                   <br>
-                  <?php if($d->a->basico3 < 80): ?>
+                  <?php if($d->a->basico3 == 0): ?>
                   <label class="cali"><?php echo $d->a->basico3; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -64,7 +64,7 @@
                 <div class="form-group">
                   <label for="basico4">Basico 4</label>
                   <br>
-                  <?php if($d->a->basico4 < 80): ?>
+                  <?php if($d->a->basico4 == 0): ?>
                   <label class="cali"><?php echo $d->a->basico4; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -76,7 +76,7 @@
                 <div class="form-group">
                   <label for="basico5">Basico 5</label>
                   <br>
-                  <?php if($d->a->basico5 < 80): ?>
+                  <?php if($d->a->basico5 == 0): ?>
                   <label class="cali"><?php echo $d->a->basico5; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -91,7 +91,7 @@
                 <div class="form-group">
                     <label for="intermedio1">Intermedio 1</label>
                     <br>
-                    <?php if($d->a->intermedio1 < 80): ?>
+                    <?php if($d->a->intermedio1 == 0): ?>
                   <label class="cali"><?php echo $d->a->intermedio1; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -103,7 +103,7 @@
                   <div class="form-group">
                     <label for="intermedio2">Intermedio 2</label>
                     <br>
-                    <?php if($d->a->intermedio2 < 80): ?>
+                    <?php if($d->a->intermedio2 == 0): ?>
                   <label class="cali"><?php echo $d->a->intermedio2; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -115,7 +115,7 @@
                   <div class="form-group">
                     <label for="intermedio3">Intermedio 3</label>
                     <br>
-                    <?php if($d->a->intermedio3 < 80): ?>
+                    <?php if($d->a->intermedio3 == 0): ?>
                   <label class="cali"><?php echo $d->a->intermedio3; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -127,7 +127,7 @@
                   <div class="form-group">
                     <label for="intermedio4">Intermedio 4</label>
                     <br>
-                    <?php if($d->a->intermedio4 < 80): ?>
+                    <?php if($d->a->intermedio4 == 0): ?>
                   <label class="cali"><?php echo $d->a->intermedio4; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -139,7 +139,7 @@
                   <div class="form-group">
                     <label for="intermedio5">Intermedio 5</label>
                     <br>
-                    <?php if($d->a->intermedio5 < 80): ?>
+                    <?php if($d->a->intermedio5 == 0): ?>
                   <label class="cali"><?php echo $d->a->intermedio5; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -154,7 +154,7 @@
                 <div class="form-group">
                     <label for="avanzado1">Avanzado 1</label>
                     <br>
-                    <?php if($d->a->avanzado1 < 80): ?>
+                    <?php if($d->a->avanzado1 == 0): ?>
                   <label class="cali"><?php echo $d->a->avanzado1; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -166,7 +166,7 @@
                   <div class="form-group">
                     <label for="avanzado2">Avanzado 2</label>
                     <br>
-                    <?php if($d->a->avanzado2 < 80): ?>
+                    <?php if($d->a->avanzado2 == 0): ?>
                   <label class="cali"><?php echo $d->a->avanzado2; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -178,7 +178,7 @@
                   <div class="form-group">
                     <label for="avanzado3">Avanzado 3</label>
                     <br>
-                    <?php if($d->a->avanzado3 < 80): ?>
+                    <?php if($d->a->avanzado3 == 0): ?>
                   <label class="cali"><?php echo $d->a->avanzado3; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -190,7 +190,7 @@
                   <div class="form-group">
                     <label for="avanzado4">Avanzado 4</label>
                     <br>
-                    <?php if($d->a->avanzado4 < 80): ?>
+                    <?php if($d->a->avanzado4 == 0): ?>
                   <label class="cali"><?php echo $d->a->avanzado4; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>
@@ -202,7 +202,7 @@
                   <div class="form-group">
                     <label for="avanzado5">Avanzado 5</label>
                     <br>
-                    <?php if($d->a->avanzado5 < 80): ?>
+                    <?php if($d->a->avanzado5 == 0): ?>
                   <label class="cali"><?php echo $d->a->avanzado5; ?></label>
                   <label class="cali">No se ha aprobado el nivel</label>
                   <?php else: ?>

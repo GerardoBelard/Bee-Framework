@@ -20,7 +20,7 @@
                 <div class="col">
                 <div class="form-group">
                   <label for="basico1">Basico 1</label>
-                  <?php if($d->a->basico1 < 80):?>
+                  <?php if($d->a->basico1 == 0):?>
                   <input type="text" class="form-control" id="basico1" name="basico1" value="<?php echo $d->a->basico1; ?>" required>
                   <?php else:?>
                   <input type="text" class="form-control" id="basico1" name="basico1" value="<?php echo $d->a->basico1; ?>" required>
@@ -30,7 +30,7 @@
   
                 <div class="form-group">
                   <label for="basico2">Basico 2</label>
-                  <?php if($d->a->basico2 < 80):?>
+                  <?php if($d->a->basico2 == 0):?>
                   <input type="text" class="form-control" id="basico2" name="basico2" value="<?php echo $d->a->basico2; ?>" required>
                   <?php else:?>
                   <input type="text" class="form-control" id="basico2" name="basico2" value="<?php echo $d->a->basico2; ?>" required>
@@ -40,7 +40,7 @@
   
                 <div class="form-group">
                   <label for="basico3">Basico 3</label>
-                  <?php if($d->a->basico3 < 80):?>
+                  <?php if($d->a->basico3 == 0):?>
                   <input type="text" class="form-control" id="basico3" name="basico3" value="<?php echo $d->a->basico3; ?>" required>
                   <?php else:?>
                   <input type="text" class="form-control" id="basico3" name="basico3" value="<?php echo $d->a->basico3; ?>" required>
@@ -50,7 +50,7 @@
   
                 <div class="form-group">
                   <label for="basico4">Basico 4</label>
-                  <?php if($d->a->basico4 < 80):?>
+                  <?php if($d->a->basico4 == 0):?>
                   <input type="text" class="form-control" id="basico4" name="basico4" value="<?php echo $d->a->basico4; ?>" required>
                   <?php else:?>
                   <input type="text" class="form-control" id="basico4" name="basico4" value="<?php echo $d->a->basico4; ?>">
@@ -60,7 +60,7 @@
   
                 <div class="form-group">
                   <label for="basico5">Basico 5</label>
-                  <?php if($d->a->basico5 < 80):?>
+                  <?php if($d->a->basico5 == 0):?>
                   <input type="text" class="form-control" id="basico5" name="basico5" value="<?php echo $d->a->basico5; ?>" required>
                   <?php else:?>
                   <input type="text" class="form-control" id="basico5" name="basico5" value="<?php echo $d->a->basico5; ?>">
@@ -73,7 +73,7 @@
                 <div class="col">
                 <div class="form-group">
                   <label for="intermedio1">Intermedio 1</label>
-                  <?php if($d->a->intermedio1 < 80):?>
+                  <?php if($d->a->intermedio1 == 0):?>
                   <input type="text" class="form-control" id="intermedio1" name="intermedio1" value="<?php echo $d->a->intermedio1; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="intermedio1" name="intermedio1" value="<?php echo $d->a->intermedio1; ?>" required>
@@ -83,7 +83,7 @@
     
                   <div class="form-group">
                     <label for="intermedio2">Intermedio 2</label>
-                    <?php if($d->a->intermedio2 < 80):?>
+                    <?php if($d->a->intermedio2 == 0):?>
                   <input type="text" class="form-control" id="intermedio2" name="intermedio2" value="<?php echo $d->a->intermedio2; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="intermedio2" name="intermedio2" value="<?php echo $d->a->intermedio2; ?>" required>
@@ -93,7 +93,7 @@
     
                   <div class="form-group">
                     <label for="intermedio3">Intermedio 3</label>
-                    <?php if($d->a->intermedio3 < 80):?>
+                    <?php if($d->a->intermedio3 == 0):?>
                   <input type="text" class="form-control" id="intermedio3" name="intermedio3" value="<?php echo $d->a->intermedio3; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="intermedio3" name="intermedio3" value="<?php echo $d->a->intermedio3; ?>" required>
@@ -103,7 +103,7 @@
     
                   <div class="form-group">
                     <label for="intermedio4">Intermedio 4</label>
-                    <?php if($d->a->intermedio4 < 80):?>
+                    <?php if($d->a->intermedio4 == 0):?>
                   <input type="text" class="form-control" id="intermedio4" name="intermedio4" value="<?php echo $d->a->intermedio4; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="intermedio4" name="intermedio4" value="<?php echo $d->a->intermedio4; ?>">
@@ -113,7 +113,7 @@
     
                   <div class="form-group">
                     <label for="intermedio5">Intermedio 5</label>
-                    <?php if($d->a->intermedio5 < 80):?>
+                    <?php if($d->a->intermedio5 == 0):?>
                   <input type="text" class="form-control" id="intermedio5" name="intermedio5" value="<?php echo $d->a->intermedio5; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="intermedio5" name="intermedio5" value="<?php echo $d->a->intermedio5; ?>">
@@ -126,7 +126,7 @@
                 <div class="col">
                 <div class="form-group">
                     <label for="avanzado1">Avanzado 1</label>
-                    <?php if($d->a->avanzado1 < 80):?>
+                    <?php if($d->a->avanzado1 == 0):?>
                   <input type="text" class="form-control" id="avanzado1" name="avanzado1" value="<?php echo $d->a->avanzado1; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="avanzado1" name="avanzado1" value="<?php echo $d->a->avanzado1; ?>" required>
@@ -136,7 +136,7 @@
     
                   <div class="form-group">
                     <label for="avanzado2">Avanzado 2</label>
-                    <?php if($d->a->avanzado2 < 80):?>
+                    <?php if($d->a->avanzado2 == 0):?>
                   <input type="text" class="form-control" id="avanzado2" name="avanzado2" value="<?php echo $d->a->avanzado2; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="avanzado2" name="avanzado2" value="<?php echo $d->a->avanzado2; ?>" required>
@@ -146,7 +146,7 @@
     
                   <div class="form-group">
                     <label for="avanzado3">Avanzado 3</label>
-                    <?php if($d->a->avanzado3 < 80):?>
+                    <?php if($d->a->avanzado3 == 0):?>
                   <input type="text" class="form-control" id="avanzado3" name="avanzado3" value="<?php echo $d->a->avanzado3; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="avanzado3" name="avanzado3" value="<?php echo $d->a->avanzado3; ?>" required>
@@ -156,7 +156,7 @@
     
                   <div class="form-group">
                     <label for="avanzado4">Avanzado 4</label>
-                    <?php if($d->a->avanzado2 < 80):?>
+                    <?php if($d->a->avanzado2 == 0):?>
                   <input type="text" class="form-control" id="avanzado4" name="avanzado4" value="<?php echo $d->a->avanzado4; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="avanzado4" name="avanzado4" value="<?php echo $d->a->avanzado4; ?>">
@@ -166,7 +166,7 @@
     
                   <div class="form-group">
                     <label for="avanzado5">Avanzado 5</label>
-                    <?php if($d->a->avanzado5 < 80):?>
+                    <?php if($d->a->avanzado5 == 0):?>
                   <input type="text" class="form-control" id="avanzado5" name="avanzado5" value="<?php echo $d->a->avanzado5; ?>" required>
                   <?php else:?>
                     <input type="text" class="form-control" id="avanzado5" name="avanzado5" value="<?php echo $d->a->avanzado5; ?>">
